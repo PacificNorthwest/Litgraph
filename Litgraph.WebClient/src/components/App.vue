@@ -1,10 +1,5 @@
 <template>
-    <div>
-        <h1>Welcome to Ligraph!</h1>
-        <span class="offset-element">Please fill in your name:</span>
-        <input type="text" v-model="name"/>
-        <h1 class="offset-element">Your name: {{ name }} </h1>
-    </div>
+    <el-button>Test</el-button>
 </template>
 
 <script lang="ts">
