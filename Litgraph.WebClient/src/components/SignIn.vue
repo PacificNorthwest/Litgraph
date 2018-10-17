@@ -71,6 +71,9 @@ export default class SignInComponent extends Vue {}
         border-bottom:1px solid #444; 
         cursor: pointer;
     }
+    #password-reminder:focus {
+        outline: 0
+    }
 
     .signin-card {
         margin: 10% 25% 20% 25%;
@@ -84,7 +87,14 @@ export default class SignInComponent extends Vue {}
         margin: 20% auto 0px auto;
         color: #2ECCFA;
         font-size: 100px;
-        font-family: 'Charmonman'
+        font-family: 'Charmonman';
+        cursor: default;
+        -webkit-touch-callout: none; 
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
     }
 </style>
 
