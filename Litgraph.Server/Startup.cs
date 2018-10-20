@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.IO;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.Webpack;
@@ -12,22 +13,33 @@ using Litgraph.DAL.Entities;
 using Litgraph.Domain.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace Litgraph.Server
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IHostingEnvironment env)
         {
-            Configuration = configuration;
+            this.Configuration = new ConfigurationBuilder()
+                        .SetBasePath(env.ContentRootPath)
+                        .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                        .AddEnvironmentVariables()
+                        .Build();
         }
 
         public IConfiguration Configuration { get; }
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddOptions();
             services.AddDbContext<LitgraphContext>(options => 
                     options.UseSqlServer(Configuration.GetConnectionString("LitgraphDB")));
+            
             services.AddIdentity<UserEntity, IdentityRole>()
                     .AddEntityFrameworkStores<LitgraphContext>()
                     .AddDefaultTokenProviders();
@@ -45,16 +57,29 @@ namespace Litgraph.Server
                 options.User.RequireUniqueEmail = false;
             });
 
-            services.Configure<CookiePolicyOptions>(options => 
-            {
-                options.CheckConsentNeeded = context => true;
-                options.MinimumSameSitePolicy = Microsoft.AspNetCore.Http.SameSiteMode.None;
-            });
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                    .AddJwtBearer(options =>
+                        options.TokenValidationParameters = new TokenValidationParameters
+                        {
+                            ValidateAudience = true,
+                            ValidateLifetime = true,
+                            ValidateIssuerSigningKey = true,
+                            ValidateIssuer = true,
+                            ValidAudience = "LitgraphUser",
+                            ValidIssuer = this.Configuration.GetValue<string>("JwtCreds:Issuer"),
+                            IssuerSigningKey = new SymmetricSecurityKey(
+                                Encoding.UTF8.GetBytes(this.Configuration.GetValue<string>("JwtCreds:Key")))
+                        }
+                    );
             
+            services.AddMvc();
             services.AddLitgraphServices();
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ISeedDataInitializer seedDataInitializer)
+        public void Configure(IApplicationBuilder app, 
+                              IHostingEnvironment env, 
+                              ISeedDataInitializer seedDataInitializer, 
+                              ILoggerFactory loggerFactory)
         {
             if (env.IsDevelopment())
             {
@@ -65,11 +90,13 @@ namespace Litgraph.Server
                 app.UseHsts();
             }
 
+            loggerFactory.AddConsole();
             app.UseDefaultFiles();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-            app.UseCookiePolicy();
             app.UseAuthentication();
+
+            app.UseMvc(routes => routes.MapRoute(name: "default", template: "{controller}/{action}"));
 
             seedDataInitializer.Initialize().GetAwaiter().GetResult();
         }

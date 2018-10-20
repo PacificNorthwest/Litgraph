@@ -4,6 +4,7 @@ using Litgraph.DAL.Entities;
 using Microsoft.AspNetCore.Identity;
 using System.Threading.Tasks;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace Litgraph.DAL
 {
@@ -29,7 +30,8 @@ namespace Litgraph.DAL
 
         public async Task Initialize()
         {
-            this._context.Database.EnsureCreated();
+            this._context.Database.Migrate();
+            
             if (!this._context.Roles.Any(r => r.Name.Equals(ADMIN)) || !this._userManager.Users.Any(u => u.UserName.Equals(ADMIN)))
             {
                 await this._roleManager.CreateAsync(new IdentityRole(ADMIN));

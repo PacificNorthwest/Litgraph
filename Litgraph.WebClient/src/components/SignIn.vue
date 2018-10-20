@@ -6,14 +6,19 @@
         <div id="signin-container">
             <div id="signin-background"></div>
             <h1>Litgraph</h1>
-            <el-card class="signin-card">
-                <el-input placeholder="Username" class="signin-input" type="text" spellcheck="false"></el-input>
-                <div style="margin-bottom:15px">
-                    <el-input placeholder="Password" class="signin-input" style="margin: 15px 0px 7px 0px" type="password"></el-input>
-                    <button id="password-reminder" v-on:click="$alert('Well thats too bad =( Shame on you!', { confirmButtonText: 'Ok' })">Forgot password?</button>
-                </div>
-                <el-button type="primary" style="font-size: 20px" round>Sign in</el-button>
-            </el-card>
+            <div>
+                <el-card class="signin-card">
+                    <el-input placeholder="Username" class="signin-input" type="text" spellcheck="false"></el-input>
+                    <div style="margin-bottom:35px">
+                        <el-input placeholder="Password" class="signin-input" style="margin: 15px 0px 7px 0px" type="password"></el-input>
+                        <button id="password-reminder" v-on:click="$alert('Well thats too bad =( Shame on you!', { confirmButtonText: 'Ok' })">Forgot password?</button>
+                    </div>
+                    <el-button type="primary" style="font-size: 20px" round>Sign in</el-button>
+                </el-card>
+                <router-link to="/signup">
+                    <el-button class="signup">Sign up</el-button>
+                </router-link>
+            </div>
         </div>
     </div>
 </template>
@@ -76,11 +81,18 @@ export default class SignInComponent extends Vue {}
     }
 
     .signin-card {
-        margin: 10% 25% 20% 25%;
+        margin: 10% 25% 10px 25%;
     }
 
     .signin-input {
         font-size: 20px
+    }
+
+    .signup {
+        position: relative;
+        float: right;
+        margin-right: 25%;
+        font-size: 16px
     }
 
     h1 {

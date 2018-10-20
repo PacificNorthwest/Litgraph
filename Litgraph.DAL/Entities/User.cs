@@ -5,6 +5,6 @@ namespace Litgraph.DAL.Entities
 {
     public class UserEntity : IdentityUser
     {
-        
+        public string JwtToken { get; set; }
     }
 }
