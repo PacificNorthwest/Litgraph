@@ -40,16 +40,14 @@ namespace Litgraph.Server.Controllers
         [HttpPost, Route("signup")]
         public async Task<IActionResult> SignUp([FromBody]SignUpRequest signUpRequest)
         {
-            var result = await this._userManager.CreateAsync(new UserEntity
-            {
-                UserName = signUpRequest.UserName,
-                Email = signUpRequest.Email
-            }, signUpRequest.Password);
+            var user = new UserEntity { UserName = signUpRequest.UserName, Email = signUpRequest.Email };
+            var result = await this._userManager.CreateAsync(user, signUpRequest.Password);
 
             if (!result.Succeeded)
                 throw new SignUpException(string.Join(';', result.Errors));
 
-            return new OkResult();
+            await this._userManager.AddToRoleAsync(user, "user");
+            return new OkObjectResult(new { token = await this.GenerateToken(user) });
         }
 
         [HttpPost, Route("signin")]

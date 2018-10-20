@@ -8,12 +8,12 @@
             <h1>Litgraph</h1>
             <div>
                 <el-card class="signin-card">
-                    <el-input placeholder="Username" class="signin-input" type="text" spellcheck="false"></el-input>
+                    <el-input placeholder="Username" class="signin-input" type="text" spellcheck="false" v-model="userName"></el-input>
                     <div style="margin-bottom:35px">
-                        <el-input placeholder="Password" class="signin-input" style="margin: 15px 0px 7px 0px" type="password"></el-input>
+                        <el-input placeholder="Password" class="signin-input" style="margin: 15px 0px 7px 0px" type="password" v-model="password"></el-input>
                         <button id="password-reminder" v-on:click="$alert('Well thats too bad =( Shame on you!', { confirmButtonText: 'Ok' })">Forgot password?</button>
                     </div>
-                    <el-button type="primary" style="font-size: 20px" round>Sign in</el-button>
+                    <el-button type="primary" style="font-size: 20px" round @click="signIn()">Sign in</el-button>
                 </el-card>
                 <router-link to="/signup">
                     <el-button class="signup">Sign up</el-button>
@@ -27,87 +27,110 @@
 import Vue from "vue";
 import Component from "vue-class-component";
 
+import UserService from "./../services/userService";
+import { RequestError } from "./../tools/httpclient";
+
 @Component
-export default class SignInComponent extends Vue {}
+export default class SignInComponent extends Vue {
+  userName: string = "";
+  password: string = "";
+
+  async signIn() {
+    if (this.userName !== "" && this.password !== "") {
+      try {
+        let token = await UserService.signIn(this.userName, this.password);
+        console.log(token);
+      } catch (e) {
+          throw e
+      }
+    }
+  }
+}
 </script>
 
 <style scoped>
 #banner-container {
-        float: left;
-        position: absolute;
-        width: 50%;
-        height: -webkit-fill-available;
-        border-right: 1px #2ECCFA solid;
-        overflow: hidden
-    }
-    #banner {
-        height: -webkit-fill-available;
-        -webkit-animation: slide 80s linear infinite
-    }
-    @-webkit-keyframes slide {
-        0% { transform: translate3d(0, 0, 0) }
-        50% { transform: translate3d(-400px, 0, 0) }
-        100% { transform: translate3d(0, 0, 0) }
-    }
+  float: left;
+  position: absolute;
+  width: 50%;
+  height: -webkit-fill-available;
+  border-right: 1px #2eccfa solid;
+  overflow: hidden;
+}
+#banner {
+  height: -webkit-fill-available;
+  -webkit-animation: slide 80s linear infinite;
+}
+@-webkit-keyframes slide {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(-400px, 0, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
 
-    #signin-container {
-        float: left;
-        position: relative;
-        left: 50%;
-        width: 50%;
-        height: -webkit-fill-available;
-        text-align: center
-    }
-    #signin-background {
-        z-index: -1;
-        position: absolute;
-        width: 100%;
-        opacity: 0.5;
-        height: -webkit-fill-available;
-        background: url("./../images/tic-tac-toe.png") repeat
-    }
-    #password-reminder {
-        font-size: 10px;
-        float: right;
-        background:none;
-        color:inherit;
-        border:none; 
-        padding:0;
-        border-bottom:1px solid #444; 
-        cursor: pointer;
-    }
-    #password-reminder:focus {
-        outline: 0
-    }
+#signin-container {
+  float: left;
+  position: relative;
+  left: 50%;
+  width: 50%;
+  height: -webkit-fill-available;
+  text-align: center;
+}
+#signin-background {
+  z-index: -1;
+  position: absolute;
+  width: 100%;
+  opacity: 0.5;
+  height: -webkit-fill-available;
+  background: url("./../images/tic-tac-toe.png") repeat;
+}
+#password-reminder {
+  font-size: 10px;
+  float: right;
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 0;
+  border-bottom: 1px solid #444;
+  cursor: pointer;
+}
+#password-reminder:focus {
+  outline: 0;
+}
 
-    .signin-card {
-        margin: 10% 25% 10px 25%;
-    }
+.signin-card {
+  margin: 10% 25% 10px 25%;
+}
 
-    .signin-input {
-        font-size: 20px
-    }
+.signin-input {
+  font-size: 20px;
+}
 
-    .signup {
-        position: relative;
-        float: right;
-        margin-right: 25%;
-        font-size: 16px
-    }
+.signup {
+  position: relative;
+  float: right;
+  margin-right: 25%;
+  font-size: 16px;
+}
 
-    h1 {
-        margin: 20% auto 0px auto;
-        color: #2ECCFA;
-        font-size: 100px;
-        font-family: 'Charmonman';
-        cursor: default;
-        -webkit-touch-callout: none; 
-        -webkit-user-select: none;
-        -khtml-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-    }
+h1 {
+  margin: 20% auto 0px auto;
+  color: #2eccfa;
+  font-size: 100px;
+  font-family: "Charmonman";
+  cursor: default;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
 </style>
 
 
