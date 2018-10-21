@@ -3,11 +3,12 @@ import ElementUI from "element-ui"
 import Router from "vue-router"
 import "element-ui/lib/theme-chalk/index.css"
 
-
 import AppComponent from "./components/App.vue"
 import SignInComponent from "./components/SignIn.vue"
 import SignUpComponent from "./components/SignUp.vue"
 import DashboardComponent from "./components/Dashboard.vue"
+
+import Store from "./vuexStore"
 
 Vue.use(ElementUI);
 Vue.use(Router);
@@ -22,6 +23,7 @@ let router = new Router({routes})
 
 let v = new Vue({
     router,
+    store: Store,
     el: "#vue-app",
     render: h => h(AppComponent)
 })
