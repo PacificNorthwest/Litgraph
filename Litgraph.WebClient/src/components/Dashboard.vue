@@ -1,6 +1,8 @@
 <template>
     <div>
-        <h1>Dashboard</h1>
+        <h1 v-if="token">Your token: {{ $store.state.identity.token }}</h1>
+        <h1 v-else>Token is empty!</h1>
+        <h1>Is logged in: {{ $store.getters['identity/isLoggedIn'] }}</h1>
     </div>
 </template>
 
@@ -10,7 +12,6 @@ import Component from "vue-class-component"
 
 @Component
 export default class DashboardComponent extends Vue {
-    
 }
 </script>
 

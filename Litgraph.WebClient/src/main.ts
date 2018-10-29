@@ -18,8 +18,18 @@ let routes = [
     { path: "/signin", component: SignInComponent, meta: {requiresAuth: false} },
     { path: "/signup", component: SignUpComponent, meta: {requiresAuth: false} }
 ]
-
 let router = new Router({routes})
+router.beforeEach((to, from, next) => {
+    if (to.matched.some(record => record.meta.requiresAuth)) {
+        if (Store.getters['identity/isLoggedIn']) {
+            next();
+            return;
+        }
+        next('/signin');
+    } else {
+        next();
+    }
+})
 
 let v = new Vue({
     router,

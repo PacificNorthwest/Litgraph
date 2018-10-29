@@ -38,8 +38,9 @@ export default class SignInComponent extends Vue {
   async signIn() {
     if (this.userName !== "" && this.password !== "") {
       try {
-        let token = await UserService.signIn(this.userName, this.password);
-        console.log(token);
+        if (await UserService.signIn(this.userName, this.password)) {
+          this.$router.push('/');
+        }
       } catch (e) {
           throw e
       }

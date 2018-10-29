@@ -1,11 +1,17 @@
 import HttpClient from "./../tools/httpclient"
+import store from "./../vuexStore"
 import { Config } from "./../tools/config"
 
 export class UserService {
 
-    async signIn(userName: string, password: string): Promise<string> {
+    async signIn(userName: string, password: string): Promise<boolean> {
         let tokenContainer = await HttpClient.Post<any>(Config.Api + '/auth/signin', { userName, password });
-        return tokenContainer.token as string;
+        if (tokenContainer.token) {
+            store.commit('identity/enrollToken', tokenContainer.token);
+        } else {
+            return false;
+        }
+        return true;
     }
 }
 

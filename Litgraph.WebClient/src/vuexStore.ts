@@ -4,17 +4,30 @@ import Vue from "vue"
 Vue.use(Vuex);
 
 const accountModule = {
+    namespaced: true,
     state: {
-        token: '',
+        token: localStorage.getItem('token') || '',
         userName: '',
         role: '',
+    },
+    mutations: {
+        enrollToken(state: any, token: string) {
+            localStorage.setItem('token', token);
+            state.token = token;
+        },
+        dropToken(state: any) {
+            localStorage.removeItem('token');
+            state.token = '';
+        }
+    },
+    getters: {
+        isLoggedIn: (state: any) => typeof state.token != 'undefined' && state.token != ''
     }
 }
 
-const storage = new Vuex.Store({
+const store = new Vuex.Store({
     modules: {
-        accountModule: accountModule
+        identity: accountModule
     }
 })
-
-export default storage;
+export default store;
