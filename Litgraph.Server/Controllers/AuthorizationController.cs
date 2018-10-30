@@ -44,7 +44,7 @@ namespace Litgraph.Server.Controllers
             var result = await this._userManager.CreateAsync(user, signUpRequest.Password);
 
             if (!result.Succeeded)
-                throw new SignUpException(string.Join(';', result.Errors));
+                throw new SignUpException(string.Join(';', result.Errors.Select(error => error.Description)));
 
             await this._userManager.AddToRoleAsync(user, "user");
             return new OkObjectResult(new { token = await this.GenerateToken(user) });

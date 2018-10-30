@@ -9,14 +9,14 @@
             <div>
                 <el-card class="signin-card">
                     <el-input placeholder="Username" class="signin-input" type="text" spellcheck="false" v-model="userName"></el-input>
-                    <div style="margin-bottom:35px">
+                    <div style="margin-bottom:45px">
                         <el-input placeholder="Password" class="signin-input" style="margin: 15px 0px 7px 0px" type="password" v-model="password"></el-input>
                         <button id="password-reminder" v-on:click="$alert('Well thats too bad =( Shame on you!', { confirmButtonText: 'Ok' })">Forgot password?</button>
                     </div>
-                    <el-button type="primary" style="font-size: 20px" round @click="signIn()">Sign in</el-button>
+                    <el-button type="primary" style="font-size: 20px" :loading="loading" @click="signIn()">Sign in</el-button>
                 </el-card>
                 <router-link to="/signup">
-                    <el-button class="signup">Sign up</el-button>
+                    <el-button class="signup">Create account</el-button>
                 </router-link>
             </div>
         </div>
@@ -35,15 +35,19 @@ export default class SignInComponent extends Vue {
   userName: string = "";
   password: string = "";
 
+  loading: boolean = false;
+
   async signIn() {
     if (this.userName !== "" && this.password !== "") {
       try {
+        this.loading = true;
         if (await UserService.signIn(this.userName, this.password)) {
           this.$router.push('/');
         }
       } catch (e) {
           this.$message.error(e.message);
       }
+      this.loading = false;
     }
   }
 }
@@ -107,6 +111,7 @@ export default class SignInComponent extends Vue {
 
 .signin-card {
   margin: 10% 25% 10px 25%;
+  padding-bottom: 10px
 }
 
 .signin-input {

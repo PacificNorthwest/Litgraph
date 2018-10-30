@@ -1,6 +1,11 @@
 <template>
     <div width=100%>
-        <router-view></router-view>
+        <transition mode="out-in" 
+                    name="router-anim" 
+                    enter-active-class="animated faster fadeIn" 
+                    leave-active-class="animated faster fadeOut">
+            <router-view></router-view>
+        </transition>
     </div>
 </template>
 
@@ -9,10 +14,14 @@ import Vue from "vue";
 import Component from "vue-class-component";
 
 @Component
-export default class AppComponent extends Vue { }
+export default class AppComponent extends Vue {
+    
+ }
 </script>
 
 <style>
+@import "./../css/animate.css";
+
 .litgraph-title {
     margin: 20% auto 0px auto;
     color: #2eccfa;
