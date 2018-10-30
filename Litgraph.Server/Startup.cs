@@ -18,6 +18,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Litgraph.Server.Middleware;
 
 namespace Litgraph.Server
 {
@@ -95,7 +96,8 @@ namespace Litgraph.Server
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseAuthentication();
-
+            app.UseMiddleware<ExceptionsMiddleware>();
+            
             app.UseMvc(routes => routes.MapRoute(name: "default", template: "{controller}/{action}"));
 
             seedDataInitializer.Initialize().GetAwaiter().GetResult();
