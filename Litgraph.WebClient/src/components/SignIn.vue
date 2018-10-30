@@ -5,7 +5,7 @@
         </div>
         <div id="signin-container">
             <div id="signin-background"></div>
-            <h1>Litgraph</h1>
+            <h1 class="litgraph-title">Litgraph</h1>
             <div>
                 <el-card class="signin-card">
                     <el-input placeholder="Username" class="signin-input" type="text" spellcheck="false" v-model="userName"></el-input>
@@ -42,11 +42,12 @@ export default class SignInComponent extends Vue {
           this.$router.push('/');
         }
       } catch (e) {
-          throw e
+          this.$message.error(e.message);
       }
     }
   }
 }
+
 </script>
 
 <style scoped>
@@ -117,20 +118,6 @@ export default class SignInComponent extends Vue {
   float: right;
   margin-right: 25%;
   font-size: 16px;
-}
-
-h1 {
-  margin: 20% auto 0px auto;
-  color: #2eccfa;
-  font-size: 100px;
-  font-family: "Charmonman";
-  cursor: default;
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
 }
 </style>
 

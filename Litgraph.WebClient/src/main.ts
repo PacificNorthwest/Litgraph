@@ -1,6 +1,7 @@
 import Vue from "vue";
 import ElementUI from "element-ui"
 import Router from "vue-router"
+import Axios from "axios"
 import "element-ui/lib/theme-chalk/index.css"
 
 import AppComponent from "./components/App.vue"
@@ -30,6 +31,10 @@ router.beforeEach((to, from, next) => {
         next();
     }
 })
+
+if (Store.getters['identity/isLoggedIn']) {
+    Axios.defaults.headers.common['Authorization'] = 'Bearer ' + Store.getters['identity/token'];
+}
 
 let v = new Vue({
     router,
