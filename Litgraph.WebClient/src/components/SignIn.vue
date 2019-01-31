@@ -96,7 +96,7 @@ export default class SignInComponent extends Vue {
   background: url("./../images/tic-tac-toe.png") repeat;
 }
 #password-reminder {
-  font-size: 10px;
+  font-size: 13px;
   float: right;
   background: none;
   color: inherit;

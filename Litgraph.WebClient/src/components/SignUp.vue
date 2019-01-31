@@ -149,12 +149,13 @@ export default class SignUpComponent extends Vue {
 }
 
 .signup-button {
-  margin-top: 30px;
+  margin-top: 15px;
   font-size: 20px;
 }
 
 .el-input {
   margin-bottom: 5px;
+  font-size: 16px
 }
 
 .signup-title {
