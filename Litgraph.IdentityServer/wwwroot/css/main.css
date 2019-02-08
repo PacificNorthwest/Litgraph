@@ -1,0 +1,58 @@
+body {
+    margin: 0px;
+    overflow: hidden
+}
+
+input,
+button,
+a,
+span {
+    font-family: 'PT Serif', serif
+}
+
+.litgraph-title {
+    margin: 20% auto 0px auto;
+    color: #2eccfa;
+    font-size: 100px;
+    font-family: "Charmonman";
+    font-weight: bold;
+    cursor: default;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.form-input {
+    font-size: 20px;
+    width: 100%;
+    border-radius: 4px;
+    padding: 3px 7px;
+    border: 1px solid lightgray;
+    margin-bottom: 15px;
+    color: darkslategray;
+}
+
+.form-input::placeholder {
+    color: gray;
+    opacity: 0.5
+}
+
+.form-input:last-of-type {
+    margin-bottom: 0px;
+}
+
+.form-button {
+    padding: 10px 20px
+}
+
+.bg {
+    z-index: -1;
+    position: absolute;
+    width: 100%;
+    opacity: 0.5;
+    height: -webkit-fill-available;
+    background: url("/images/tic-tac-toe.png") repeat;
+}

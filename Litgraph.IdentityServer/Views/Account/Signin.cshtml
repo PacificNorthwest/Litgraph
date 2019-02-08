@@ -1,0 +1,39 @@
+@model Litgraph.IdentityServer.Model.Authorization.SignInModel
+@{ Layout = "~/Views/Shared/_Layout.cshtml"; }
+
+<div id="banner-container">
+    <img src="/images/book.jpeg" id="banner" alt="" srcset="">
+</div>
+
+<div id="signin-container">
+    <div class="bg"></div>
+    <h1 class="litgraph-title">Litgraph</h1>
+    <div class="card signin-card shadow p-3">
+        <div class="card-body">
+            <form method="post" asp-route="Login">
+                <fieldset>
+                    <input type="hidden" name="ReturnUrl" value="@Model.ReturnUrl"/>
+                    <input type="text" placeholder="Username" name="UserName" class="form-input" style="margin-bottom: 20px" spellcheck="false" autofocus/>
+                    <div style="margin-bottom:45px">
+                        <input placeholder="Password" name="Password" class="form-input" type="password"/>
+                        <button id="password-reminder" onclick="">Forgot password?</button>
+                    </div>
+                    <button type="submit" class="btn form-button signin-button">Sign in</button>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+    <button class="btn form-button signup-route-button" onclick="signup()">Create account</button>
+</div>
+
+@section scripts {
+    <script>
+        function signup() {
+            location.href = '@Url.Action("signup")'
+        }
+    </script>
+}
+
+@section styles {
+    <link rel="stylesheet" href="css/signin.css"/>
+}

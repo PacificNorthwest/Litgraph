@@ -1,0 +1,52 @@
+@model Litgraph.IdentityServer.Model.Authorization.SignUpModel
+@{ Layout = "~/Views/Shared/_Layout.cshtml"; }
+
+<div class="signup-container">
+    <div class="bg"></div>
+    <h1 class="litgraph-title signup-title">Litgraph</h1>
+    <div style="margin: 4% auto 1% auto">
+        <span class="subtitle">New to Litgraph?</span>
+        <span class="subtitle">Create a free account!</span>
+    </div>
+
+    <div class="card signup-card shadow p-2">
+        <div class="card-body">
+            <form method="post" asp-action="Signup">
+                <div class="form-group">
+                    <input type="text" asp-for="UserName" class="form-control form-input" placeholder="Username" spellcheck="false" autofocus/>
+                    <span asp-validation-for="UserName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="text" asp-for="Email" class="form-control form-input" placeholder="Email" spellcheck="false"/>
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="password" asp-for="Password" class="form-control form-input" placeholder="Password" spellcheck="false"/>
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="password" asp-for="PasswordRepeat" class="form-control form-input" placeholder="Repeat password" spellcheck="false"/>
+                    <span asp-validation-for="PasswordRepeat" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="btn form-button signup-button">Sign up</button>
+                </div>
+                
+            </form>
+        </div>
+    </div>
+    <button class="btn signin-route-button" onclick="signin()">Sign in</button>
+</div>
+
+@section scripts {
+    <script>
+        function signin() {
+            location.href = '@Url.Action("signin")'
+        }
+    </script>
+}
+
+@section styles {
+    <link rel="stylesheet" href="css/signup.css"/>
+}
