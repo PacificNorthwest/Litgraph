@@ -1,7 +1,7 @@
 namespace Litgraph.IdentityServer.Model
 {
-    public class Apis
+    public static class Apis
     {
-        public const string GRAPHQL = "graphql";
+        public static (string name, string desc) GraphQL => ("graphql", "GraphQL API");
     }
 }

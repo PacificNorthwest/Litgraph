@@ -63,6 +63,7 @@ namespace Litgraph.IdentityServer
             services.AddMvc();
             services.AddLitgraphServices();
 
+            var migrationsAssembly = typeof (Startup).GetTypeInfo ().Assembly.GetName ().Name;
             var builder = services.AddIdentityServer(options => 
             {
                 options.Events.RaiseErrorEvents = true;
@@ -70,8 +71,8 @@ namespace Litgraph.IdentityServer
                 options.Events.RaiseInformationEvents = true;
                 options.Events.RaiseSuccessEvents = true;
 
-            }).AddOperationalStore(options => options.ConfigureDbContext = b => b.UseSqlServer(_conf.GetConnectionString("LitgraphDB")))
-              .AddConfigurationStore(options => options.ConfigureDbContext = b => b.UseSqlServer(_conf.GetConnectionString("LitgraphDB")))
+            }).AddOperationalStore(options => options.ConfigureDbContext = b => b.UseSqlServer(_conf.GetConnectionString("LitgraphDB"), db => db.MigrationsAssembly(migrationsAssembly)))
+              .AddConfigurationStore(options => options.ConfigureDbContext = b => b.UseSqlServer(_conf.GetConnectionString("LitgraphDB"), db => db.MigrationsAssembly(migrationsAssembly)))
               .AddAspNetIdentity<UserEntity>();
 
             if (_env.IsDevelopment())

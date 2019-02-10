@@ -1,0 +1,71 @@
+$main-color: #2eccfa;
+$borders:#3a4660;
+
+
+.book-loader{
+  top: 50%;
+  transform: translateY(-50%);
+  position:relative;
+  margin:0 auto;
+  border:5px solid $borders;
+  background: $main-color;
+  width:150px;
+  height:80px;
+}
+.book-loader-page{
+  position:absolute;
+  left:50%;
+  top:-5px;
+  margin:0 auto;
+  border-top:5px solid $borders;
+  border-bottom:5px solid $borders;
+  border-right:5px solid $borders;
+  background: $main-color;
+  width:75px;
+  height:80px;
+  transform-origin:0% 50%;
+  animation:flip 4s infinite linear;
+  animation-fill-mode:forwards;
+  
+  @for $i from 1 through 3 {
+    &:nth-child(#{$i}) { 
+        z-index: -1;
+      animation-delay:0.7s*$i;
+    }
+  }
+}
+
+@keyframes flip {
+  0%{
+      transform: perspective( 600px )
+      rotateY( -0deg );
+  }
+  20%{
+    background:darken($main-color,10%);
+  }
+  25%{
+    z-index: 1;
+  }
+  29.9%{
+      background:darken($main-color,10%);
+  }
+  30%{
+      transform: perspective( 200px )
+      rotateY( -90deg );
+      background:$main-color;
+  }
+  55%{
+    z-index: 0;
+  }
+  60%{
+    transform: perspective( 200px )
+    rotateY( -180deg );
+    background:$main-color;
+  }
+  100%{
+    transform: perspective( 200px )
+    rotateY( -180deg );
+    z-index: -1;
+    background:$main-color;
+  }
+}

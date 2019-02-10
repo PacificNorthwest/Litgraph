@@ -1,35 +1,31 @@
 import Vuex from "vuex"
 import Vue from "vue"
 import Axios from "axios"
+import { vuexOidcCreateStoreModule } from "vuex-oidc"
+
+import oidcConfig from "./oidc.json"
 
 Vue.use(Vuex);
 
-const accountModule = {
+const errorModule = {
     namespaced: true,
     state: {
-        token: localStorage.getItem('token') || ''
+        isFatal: false
     },
     mutations: {
-        enrollToken(state: any, token: string) {
-            localStorage.setItem('token', token);
-            Axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
-            state.token = token;
-        },
-        dropToken(state: any) {
-            localStorage.removeItem('token');
-            Axios.defaults.headers.common['Authorization'] = '';
-            state.token = '';
+        reportError(state: any) {
+            state.isFatal = true;
         }
     },
     getters: {
-        isLoggedIn: (state: any) => state.token != '',
-        token: (state: any) => state.token
+        isFatal: (state: any) => state.isFatal
     }
 }
 
 const store = new Vuex.Store({
     modules: {
-        identity: accountModule
+        identity: vuexOidcCreateStoreModule(oidcConfig, { namespaced: true }),
+        errors: errorModule
     }
 })
 export default store;

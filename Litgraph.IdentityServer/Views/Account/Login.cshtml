@@ -1,0 +1,43 @@
+@model Litgraph.IdentityServer.Model.Authorization.SignInModel
+@{ Layout = "~/Views/Shared/_Layout.cshtml"; }
+
+<div id="banner-container">
+    <img src="/images/book.jpeg" id="banner" alt="" srcset="">
+</div>
+
+<div id="signin-container">
+    <div class="bg"></div>
+    <h1 class="litgraph-title">Litgraph</h1>
+    <div class="card signin-card shadow p-3">
+        <div class="card-body">
+            <form method="post" asp-route="Login">
+                <input type="hidden" asp-for="ReturnUrl" value="@Model.ReturnUrl"/>
+                <div class="form-group">
+                    <input type="text" placeholder="Username" asp-for="UserName" class="form-control form-input" style="margin-bottom: 20px" spellcheck="false" autofocus/>                    
+                    <span asp-validation-for="UserName" class="text-danger"></span>
+                </div>
+                <div style="margin-bottom:45px" class="formm-group">
+                    <input placeholder="Password" asp-for="Password" class="form-control form-input" type="password"/>
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                    <button id="password-reminder" onclick="">Forgot password?</button>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn form-button signin-button">Sign in</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <button class="btn form-button signup-route-button" onclick="signup()">Create account</button>
+</div>
+
+@section scripts {
+    <script>
+        function signup() {
+            location.href = '@Url.Action("Signup", new { ReturnUrl = @Model.ReturnUrl })'
+        }
+    </script>
+}
+
+@section styles {
+    <link rel="stylesheet" href="~/css/signin.css"/>
+}

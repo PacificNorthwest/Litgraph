@@ -23,15 +23,15 @@ using Litgraph.IdentityServer.DAL;
 
 namespace Litgraph.IdentityServer.Controllers
 {
-    [Route("/"), AllowAnonymous]
+    [AllowAnonymous]
     public class AccountController : Controller
     {
-        private SignInManager<UserEntity> _signInManager;
-        private UserManager<UserEntity> _userManager;
-        private IConfiguration _configuration;
-        private IIdentityServerInteractionService _identityInteraction;
-        private IClientStore _clientStore;
-        private IEventService _events;
+        private readonly SignInManager<UserEntity> _signInManager;
+        private readonly UserManager<UserEntity> _userManager;
+        private readonly IConfiguration _configuration;
+        private readonly IIdentityServerInteractionService _identityInteraction;
+        private readonly IClientStore _clientStore;
+        private readonly IEventService _events;
 
         public AccountController(SignInManager<UserEntity> signInManager,
                                  UserManager<UserEntity> userManager,
@@ -49,14 +49,14 @@ namespace Litgraph.IdentityServer.Controllers
             this._events = events;
         }
 
-        [HttpGet, Route("signin")]
-        public IActionResult Signin(string callbackUrl)
+        [HttpGet]
+        public IActionResult Login(string returnUrl)
         {
-            return View(new SignInModel { ReturnUrl = callbackUrl });
+            return View(new SignInModel { ReturnUrl = returnUrl });
         }
 
-        [HttpPost, Route("signin")]
-        public async Task<IActionResult> Signin(SignInModel signInModel)
+        [HttpPost]
+        public async Task<IActionResult> Login(SignInModel signInModel)
         {
             var context = await this._identityInteraction.GetAuthorizationContextAsync(signInModel.ReturnUrl);
 
@@ -85,14 +85,14 @@ namespace Litgraph.IdentityServer.Controllers
             return View(new SignInModel { ReturnUrl = signInModel.ReturnUrl });
         }
 
-        [HttpGet, Route("signup")]
-        public IActionResult Signup(string callbackUrl)
+        [HttpGet]
+        public IActionResult Signup(string returnUrl)
         {
-            return View(new SignUpModel { ReturnUrl = callbackUrl });
+            return View(new SignUpModel { ReturnUrl = returnUrl });
         }
 
-        [HttpPost, Route("signup"), ValidateAntiForgeryToken]
-        public async Task<IActionResult> Signup([Bind("UserName", "Email", "Password", "PasswordRepeat")]SignUpModel signUpModel)
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<IActionResult> Signup([Bind("UserName", "Email", "Password", "PasswordRepeat", "ReturnUrl")]SignUpModel signUpModel)
         {
             if (!ModelState.IsValid)
                 return View(signUpModel);

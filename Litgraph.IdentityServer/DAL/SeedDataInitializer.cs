@@ -14,7 +14,7 @@ namespace Litgraph.IdentityServer.DAL
     public class SeedDataInitializer : ISeedDataInitializer
     {
         //replace by env variables
-        private const string ADMIN_PASS = "admin";
+        private const string ADMIN_PASS = "adminpass";
         private const string ADMIN_EMAIL = "admin@admin.com";
 
         private LitgraphContext _context;

@@ -1,0 +1,7 @@
+{
+    "authority": "https://localhost:5001",
+    "client_id": "litgraph_vue",
+    "redirect_uri": "http://localhost:9000/oidc",
+    "response_type": "id_token token",
+    "scope": "openid profile email graphql"
+}

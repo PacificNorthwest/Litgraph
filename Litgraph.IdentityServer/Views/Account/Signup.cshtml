@@ -12,6 +12,7 @@
     <div class="card signup-card shadow p-2">
         <div class="card-body">
             <form method="post" asp-action="Signup">
+                <input type="hidden" asp-for="ReturnUrl" value="@Model.ReturnUrl"/>
                 <div class="form-group">
                     <input type="text" asp-for="UserName" class="form-control form-input" placeholder="Username" spellcheck="false" autofocus/>
                     <span asp-validation-for="UserName" class="text-danger"></span>
@@ -36,17 +37,17 @@
             </form>
         </div>
     </div>
-    <button class="btn signin-route-button" onclick="signin()">Sign in</button>
+    <button class="btn signin-route-button" onclick="login()">Sign in</button>
 </div>
 
 @section scripts {
     <script>
-        function signin() {
-            location.href = '@Url.Action("signin")'
+        function login() {
+            location.href = '@Url.Action("Login", new { ReturnUrl = @Model.ReturnUrl })'
         }
     </script>
 }
 
 @section styles {
-    <link rel="stylesheet" href="css/signup.css"/>
+    <link rel="stylesheet" href="~/css/signup.css"/>
 }

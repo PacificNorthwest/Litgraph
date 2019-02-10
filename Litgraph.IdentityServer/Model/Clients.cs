@@ -2,6 +2,6 @@ namespace Litgraph.IdentityServer.Model
 {
     public class Clients
     {
-        public const string VUE_CLIENT = "litgraph_vue";
+        public static (string name, string desc) VueClient => ("litgraph_vue", "Litgraph VueJS client");
     }
 }

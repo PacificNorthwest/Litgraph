@@ -10,20 +10,22 @@ namespace Litgraph.IdentityServer.Model
             => new List<IdentityResource>
             {
                 new IdentityResources.OpenId(),
-                new IdentityResources.Profile()
+                new IdentityResources.Profile(),
+                new IdentityResources.Email()
             };
 
         public static IEnumerable<ApiResource> GetApiResources()
-            => new List<ApiResource> { new ApiResource(Apis.GRAPHQL, "GraphQL API") };
+            => new List<ApiResource> { new ApiResource(Apis.GraphQL.name, Apis.GraphQL.desc) };
 
         public static IEnumerable<Client> GetClients()
             => new List<Client>
             {
                 new Client
                 {
-                    ClientId = Clients.VUE_CLIENT,
-                    ClientName = "Litgraph VueJS client",
+                    ClientId = Clients.VueClient.name,
+                    ClientName = Clients.VueClient.desc,
                     AllowedGrantTypes = GrantTypes.Implicit,
+                    AllowAccessTokensViaBrowser = true,
                     RequireConsent = false,
                     RequireClientSecret = false,
 
@@ -31,10 +33,13 @@ namespace Litgraph.IdentityServer.Model
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
-                        Apis.GRAPHQL
+                        IdentityServerConstants.StandardScopes.Email,
+                        IdentityServerConstants.StandardScopes.OfflineAccess,
+
+                        Apis.GraphQL.name
                     },
 
-                    RedirectUris = { "http://localhost:9000/dashboard" },
+                    RedirectUris = { "http://localhost:9000/oidc" },
                     PostLogoutRedirectUris = { "http://localhost:9000/" },
                     AllowedCorsOrigins = { "http://localhost:9000" }
                 }

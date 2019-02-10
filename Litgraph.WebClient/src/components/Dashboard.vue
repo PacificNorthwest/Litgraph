@@ -1,6 +1,6 @@
 <template>
-    <div>
-        <span class="dashboard-header" v-show="$store.getters['identity/isLoggedIn']">
+    <div class="dashboard-container">
+        <span class="dashboard-header">
             <h1 class="litgraph-title title">Litgraph</h1>
 
             <span class="breadcrumb">
@@ -13,14 +13,13 @@
                 <input placeholder="Search" class="search-input"/>
                 <el-button class="icon-button" circle><img src="./../icons/search.svg" class="icon" alt=""/></el-button>
 
-                <el-popover placement="bottom" trigger="click" width="200" title="Username" content="Profile information">
+                <el-popover placement="bottom" trigger="click" width="200" :title="user.name" content="Profile information">
                     <el-button class="icon-button" slot="reference" circle><img src="./../icons/user.svg" class="icon" alt=""/></el-button>
                 </el-popover>
             </span>
             
         </span>
-        <div class="sidebar" v-show="$store.getters['identity/isLoggedIn']" 
-             :style="{ width: isSideMenuExpanded ? '300px' : '70px'}">
+        <div class="sidebar" :style="{ width: isSideMenuExpanded ? '300px' : '70px'}">
             <button class="hamburger hamburger-button hamburger--collapse" :class="{ 'is-active': isSideMenuExpanded }" style="color: white"
                     @click="isSideMenuExpanded = !isSideMenuExpanded">
                     <span class="hamburger-box">
@@ -30,31 +29,35 @@
         </div>
 
         <div>
-            <h1>Dashboard</h1>
-            <h1>Dashboard</h1>
-            <h1>Dashboard</h1>
-            <h1>Dashboard</h1>
-            <h1>Dashboard</h1>
-            <h1>Dashboard</h1>
-            <h1>Dashboard</h1>
+            <!-- Dashboard content here -->
         </div>
-        
-        <!-- <h1 v-if="$store.getters['identity/isLoggedIn']">Your token: {{ $store.state.identity.token }}</h1> -->
-        
     </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
 import Component from "vue-class-component"
+import { mapGetters } from 'vuex';
 
-@Component
+@Component({
+    computed: {
+        ...mapGetters({
+            'user': 'identity/oidcUser'
+        })
+    }
+})
 export default class DashboardComponent extends Vue {
-  isSideMenuExpanded: boolean = false;    
+  isSideMenuExpanded: boolean = false;
 }
 </script>
 
 <style scoped>
+@import "./../css/hamburger.css";
+
+.dashboard-container {
+    overflow: hidden;
+}
+
 .sidebar {
   float: left;
   position: relative;
@@ -63,7 +66,6 @@ export default class DashboardComponent extends Vue {
   height: -webkit-fill-available;
   width: 50px;
   border-right: 1px solid #2eccfa;
-  /* background-color: #484848; */
   background-color: #43516e;
 
   -webkit-transition: width 0.6s;
@@ -109,7 +111,7 @@ export default class DashboardComponent extends Vue {
     background-color: transparent;
     color:white;
     margin: 5px -30px 5px auto;
-    padding-top: 15px;
+    padding-top: 25px;
     width: 360px;
     border: 0px;
     border-radius: 0px;
@@ -120,7 +122,8 @@ export default class DashboardComponent extends Vue {
     outline: none
 }
 .search-input::placeholder {
-    color: white
+    color: white;
+    opacity: 0.4;
 }
 
 .icon-button {
