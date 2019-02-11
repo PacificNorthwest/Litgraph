@@ -10,12 +10,12 @@
             </span>
 
             <span class="header-menu">
-                <input placeholder="Search" class="search-input"/>
-                <el-button class="icon-button" circle><img src="./../icons/search.svg" class="icon" alt=""/></el-button>
+                <transition name="slide-fade">
+                    <input placeholder="Search" ref="searchfield" class="search-input" v-show="revealSearchField"/>
+                </transition>
 
-                <el-popover placement="bottom" trigger="click" width="200" :title="user.name" content="Profile information">
-                    <el-button class="icon-button" slot="reference" circle><img src="./../icons/user.svg" class="icon" alt=""/></el-button>
-                </el-popover>
+                <button class="icon-button circle" @click="revealSearchField = !revealSearchField"><img src="./../icons/search.svg" class="icon" alt=""/></button>
+                <button class="icon-button circle"><img src="./../icons/user.svg" class="icon" alt=""/></button>
             </span>
             
         </span>
@@ -48,6 +48,7 @@ import { mapGetters } from 'vuex';
 })
 export default class DashboardComponent extends Vue {
   isSideMenuExpanded: boolean = false;
+  revealSearchField: boolean = false;
 }
 </script>
 
@@ -110,7 +111,7 @@ export default class DashboardComponent extends Vue {
 .search-input {
     background-color: transparent;
     color:white;
-    margin: 5px -30px 5px auto;
+    margin: 5px auto 15px auto;
     padding-top: 25px;
     width: 360px;
     border: 0px;
@@ -126,10 +127,19 @@ export default class DashboardComponent extends Vue {
     opacity: 0.4;
 }
 
+.slide-fade-enter-active, .slide-fade-leave-active {
+    transition: all .5s;
+}
+.slide-fade-enter, .slide-fade-leave-to {
+    opacity: 0;
+    transform: translateX(50px)
+}
+
 .icon-button {
     background-color: #3a4660;
     border: hidden;
-    margin: 5px auto
+    margin: 5px auto;
+    padding: 10px
 }
 .icon-button:hover {
     background-color: #43516e;

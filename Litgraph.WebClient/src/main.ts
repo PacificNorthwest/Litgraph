@@ -1,8 +1,6 @@
 import Vue from "vue";
-import ElementUI from "element-ui"
 import Router from "vue-router"
 import Axios from "axios"
-import "element-ui/lib/theme-chalk/index.css"
 
 import { vuexOidcCreateRouterMiddleware } from "vuex-oidc"
 
@@ -12,8 +10,6 @@ import OidcCallbackComponent from "./components/OidcCallback.vue"
 import ErrorComponent from "./components/Error.vue"
 
 import store from "./vuexStore"
-
-Vue.use(ElementUI);
 Vue.use(Router);
 
 let routes = [

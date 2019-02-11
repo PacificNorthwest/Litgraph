@@ -34,10 +34,12 @@ import { mapGetters } from "vuex";
     })
   }
 })
-export default class AppComponent extends Vue {}
+export default class AppComponent extends Vue { }
 </script>
 
 <style>
+@import "./../css/common.css";
+
 body {
     overflow: hidden;
     margin: 0;
