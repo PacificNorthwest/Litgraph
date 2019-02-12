@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Router from "vue-router"
-import Axios from "axios"
+import Vuetify from "vuetify"
+import "vuetify/dist/vuetify.min.css"
 
 import { vuexOidcCreateRouterMiddleware } from "vuex-oidc"
 
@@ -10,6 +11,8 @@ import OidcCallbackComponent from "./components/OidcCallback.vue"
 import ErrorComponent from "./components/Error.vue"
 
 import store from "./vuexStore"
+
+Vue.use(Vuetify);
 Vue.use(Router);
 
 let routes = [

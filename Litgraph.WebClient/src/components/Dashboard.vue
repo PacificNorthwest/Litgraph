@@ -1,7 +1,7 @@
 <template>
     <div class="dashboard-container">
         <span class="dashboard-header">
-            <h1 class="litgraph-title title">Litgraph</h1>
+            <h1 class="litgraph-title dashboard-title">Litgraph</h1>
 
             <span class="breadcrumb">
                 <span>Brave new world</span>
@@ -14,8 +14,12 @@
                     <input placeholder="Search" ref="searchfield" class="search-input" v-show="revealSearchField"/>
                 </transition>
 
-                <button class="icon-button circle" @click="revealSearchField = !revealSearchField"><img src="./../icons/search.svg" class="icon" alt=""/></button>
-                <button class="icon-button circle"><img src="./../icons/user.svg" class="icon" alt=""/></button>
+                <v-btn fab class="icon-button circle" @click="revealSearchField = !revealSearchField">
+                    <v-icon color="#2eccfa" large>search</v-icon>
+                </v-btn>
+                <v-btn fab class="icon-button circle">
+                    <v-icon color="#2eccfa" large>person</v-icon>
+                </v-btn>
             </span>
             
         </span>
@@ -95,7 +99,7 @@ export default class DashboardComponent extends Vue {
     text-align: left
 }
 
-.dashboard-header .title {
+.dashboard-title {
     margin: 5px 25px;
     font-size: 35px;
 }
@@ -136,9 +140,9 @@ export default class DashboardComponent extends Vue {
 }
 
 .icon-button {
-    background-color: #3a4660;
+    background-color: #3a4660!important;
     border: hidden;
-    margin: 5px auto;
+    margin: 10px;
     padding: 10px
 }
 .icon-button:hover {
