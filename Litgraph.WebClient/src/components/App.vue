@@ -1,5 +1,5 @@
 <template>
-  <div width="100%" style="overflow: hidden">
+  <v-app width="100%" style="overflow: hidden">
     <transition
       mode="out-in"
       name="router-anim"
@@ -13,7 +13,7 @@
         <router-view v-else></router-view>
       </template>
     </transition>
-  </div>
+  </v-app>
 </template>
 
 <script lang="ts">
@@ -41,13 +41,14 @@ export default class AppComponent extends Vue { }
 @import "./../css/common.css";
 
 body {
-    overflow: hidden;
     margin: 0;
 }
 
-h1,
-h2,
-h3 {
+::-webkit-scrollbar {
+  width: 0;
+}
+
+.litgraph-title {
   color: #2eccfa;
   font-family: "Charmonman";
   cursor: default;
@@ -58,10 +59,5 @@ h3 {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-}
-
-.litgraph-title {
-  margin: 20% auto 0px auto;
-  font-size: 100px;
 }
 </style>

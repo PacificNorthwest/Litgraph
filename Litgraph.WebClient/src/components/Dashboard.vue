@@ -1,58 +1,80 @@
 <template>
-    <div class="dashboard-container">
-        <span class="dashboard-header">
-            <h1 class="litgraph-title dashboard-title">Litgraph</h1>
+  <div class="dashboard-container">
+    <v-toolbar class="dashboard-header">
+      <v-toolbar-title class="litgraph-title dashboard-title">Litgraph</v-toolbar-title>
+      <v-breadcrumbs :items="breadcrumbItems" class="depth-navigation-menu">
+        <v-icon color="white" slot="divider">arrow_forward_ios</v-icon>
+        <template slot="item" slot-scope="props">
+          <a href class="depth-navigation-item">{{ props.item }}</a>
+        </template>
+      </v-breadcrumbs>
+      <v-spacer></v-spacer>
+      <v-toolbar-items>
+        <transition name="slide-fade">
+          <v-autocomplete
+            class="search-input"
+            placeholder="Start typing to search"
+            color="white"
+            dark
+            hide-no-data
+            hide-selected
+            v-show="revealSearchField"
+            @blur="revealSearchField = false"
+            ref="searchField"
+          ></v-autocomplete>
+        </transition>
+        <v-btn fab class="icon-button circle" @click="toggleSearchField">
+          <v-icon color="#2eccfa" large>search</v-icon>
+        </v-btn>
 
-            <span class="breadcrumb">
-                <span>Brave new world</span>
-                <span>Characters</span>
-                <span>John</span>
-            </span>
+        <v-btn fab class="icon-button circle">
+          <v-icon color="#2eccfa" large>person</v-icon>
+        </v-btn>
+      </v-toolbar-items>
+    </v-toolbar>
 
-            <span class="header-menu">
-                <transition name="slide-fade">
-                    <input placeholder="Search" ref="searchfield" class="search-input" v-show="revealSearchField"/>
-                </transition>
-
-                <v-btn fab class="icon-button circle" @click="revealSearchField = !revealSearchField">
-                    <v-icon color="#2eccfa" large>search</v-icon>
-                </v-btn>
-                <v-btn fab class="icon-button circle">
-                    <v-icon color="#2eccfa" large>person</v-icon>
-                </v-btn>
-            </span>
-            
+    <v-navigation-drawer class="sidebar" :mini-variant="!isSideMenuExpanded" app permanent clipped>
+      <button
+        class="hamburger hamburger-button hamburger--collapse"
+        :class="{ 'is-active': isSideMenuExpanded }"
+        style="color: white"
+        @click="isSideMenuExpanded = !isSideMenuExpanded">
+        <span class="hamburger-box">
+          <span class="hamburger-inner"></span>
         </span>
-        <div class="sidebar" :style="{ width: isSideMenuExpanded ? '300px' : '70px'}">
-            <button class="hamburger hamburger-button hamburger--collapse" :class="{ 'is-active': isSideMenuExpanded }" style="color: white"
-                    @click="isSideMenuExpanded = !isSideMenuExpanded">
-                    <span class="hamburger-box">
-                        <span class="hamburger-inner"></span>
-                    </span>
-            </button>
-        </div>
+      </button>
+    </v-navigation-drawer>
 
-        <div>
-            <!-- Dashboard content here -->
-        </div>
+    <div class="dashboard-content">
+        <h1 style="margin-left: 30px">Dashboard content</h1>
     </div>
+  </div>
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
-import Component from "vue-class-component"
-import { mapGetters } from 'vuex';
+import Vue from "vue";
+import Component from "vue-class-component";
+import { mapGetters } from "vuex";
 
 @Component({
-    computed: {
-        ...mapGetters({
-            'user': 'identity/oidcUser'
-        })
-    }
+  computed: {
+    ...mapGetters({
+      user: "identity/oidcUser"
+    })
+  }
 })
 export default class DashboardComponent extends Vue {
   isSideMenuExpanded: boolean = false;
   revealSearchField: boolean = false;
+
+  breadcrumbItems: string[] = ["Brave new world", "Characters", "John"];
+
+  toggleSearchField() {
+    this.revealSearchField = !this.revealSearchField;
+    if (this.revealSearchField) {
+      this.$nextTick((this.$refs.searchField as any).focus);
+    }
+  }
 }
 </script>
 
@@ -60,123 +82,76 @@ export default class DashboardComponent extends Vue {
 @import "./../css/hamburger.css";
 
 .dashboard-container {
-    overflow: hidden;
+  overflow: hidden;
+  height: 100%
 }
 
 .sidebar {
-  float: left;
-  position: relative;
-  margin-right: 15px;
-  z-index: 1;
-  height: -webkit-fill-available;
-  width: 50px;
-  border-right: 1px solid #2eccfa;
   background-color: #43516e;
-
-  -webkit-transition: width 0.6s;
-  transition: width 0.6s;
-  color: white
+  position:relative;
+  float: left
 }
 
+.hamburger-button {
+    margin: 0px 5px;
+}
 .hamburger-button:focus {
-    outline: 0
+  outline: 0;
 }
 
-.hamburger-inner, 
-.hamburger-inner::before, 
-.hamburger-inner::after, 
-.hamburger.is-active .hamburger-inner, 
-.hamburger.is-active .hamburger-inner::before, 
+.hamburger-inner,
+.hamburger-inner::before,
+.hamburger-inner::after,
+.hamburger.is-active .hamburger-inner,
+.hamburger.is-active .hamburger-inner::before,
 .hamburger.is-active .hamburger-inner::after {
-    background-color: white
+  background-color: white;
 }
 
 .dashboard-header {
-    display: -webkit-box;
-    width: 100%;
-    background-color: #3a4660;
-    height: fit-content;
-    text-align: left
+  background-color: #3a4660;
+  padding: 7px;
+}
+
+.depth-navigation-menu {
+  margin-left: 60px;
+}
+
+.depth-navigation-item {
+  color: white;
+  font-size: 22px;
+  text-decoration: none;
 }
 
 .dashboard-title {
-    margin: 5px 25px;
-    font-size: 35px;
-}
-
-.header-menu {
-    display: inline-flex;
-    position: absolute;
-    right: 30px;
-    height: 67px;
-    line-height: 67px;
+  padding: 5px 20px;
+  font-size: 35px;
 }
 
 .search-input {
-    background-color: transparent;
-    color:white;
-    margin: 5px auto 15px auto;
-    padding-top: 25px;
-    width: 360px;
-    border: 0px;
-    border-radius: 0px;
-    border-bottom: 1px solid #2eccfa;
-    font-size: 18px;
-}
-.search-input:focus {
-    outline: none
-}
-.search-input::placeholder {
-    color: white;
-    opacity: 0.4;
-}
-
-.slide-fade-enter-active, .slide-fade-leave-active {
-    transition: all .5s;
-}
-.slide-fade-enter, .slide-fade-leave-to {
-    opacity: 0;
-    transform: translateX(50px)
+  background-color: transparent;
+  color: white;
+  margin: 5px auto 15px auto;
+  width: 360px;
+  font-size: 18px;
 }
 
 .icon-button {
-    background-color: #3a4660!important;
-    border: hidden;
-    margin: 10px;
-    padding: 10px
+  background-color: #3a4660 !important;
+  border: hidden;
+  margin: 10px;
+  padding: 10px;
 }
 .icon-button:hover {
-    background-color: #43516e;
+  background-color: #43516e;
 }
 .icon-button:focus {
-    background-color: #3a4660;
-    border: hidden;
-}
-.icon {
-    width: 35px
+  background-color: #3a4660;
+  border: hidden;
 }
 
-.breadcrumb {
-    color: white;
-    font-size: 22px;
-    margin: 5px 55px;
-    height: 67px;
-    display: -webkit-box;
-    line-height: 67px; 
-}
-.breadcrumb span::after {
-    background-image: url(./../icons/arrow-right.svg);
-    background-repeat: no-repeat;
-    background-size: 15px 15px;
-    content: " ";
-    width: 15px;
-    height: 15px;
-    display: -webkit-inline-box;
-    margin: auto 3px auto 10px
-}
-.breadcrumb span:last-child::after {
-    content: none;
-    display: none
+.dashboard-content {
+    display: flex;
 }
 </style>
 
