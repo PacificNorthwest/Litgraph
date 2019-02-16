@@ -1,23 +1,22 @@
 <template>
-  <div class="loading-container-outer">
-    <div class="loading-container-middle">
-      <div class="loading-container-inner">
-        <div class="spinner">
-          <div class="double-bounce1"></div>
-          <div class="double-bounce2"></div>
-        </div>
-        <h2 class="loading-text">Loading</h2>
-      </div>
+  <styled-container>
+    <div class="spinner">
+      <div class="double-bounce1"></div>
+      <div class="double-bounce2"></div>
     </div>
-  </div>
+    <h2 class="styled-title loading-text">Loading</h2>
+  </styled-container>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
 import { mapActions, mapMutations } from "vuex";
 
+import StyledContainer from "./controls/StyledContainer.vue";
+
 export default Vue.extend({
   name: "OidcCallback",
+  components: { "styled-container": StyledContainer },
   methods: {
     ...mapActions({
       oidcSignInCallback: "identity/oidcSignInCallback"
@@ -39,34 +38,13 @@ export default Vue.extend({
 <style scoped>
 @import "./../css/dots-spinner-animation.css";
 
-.loading-container-outer {
-  background: url("./../images/tic-tac-toe.png") repeat;
-  width: 100%;
-  height: -webkit-fill-available;
-  display: table;
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-.loading-container-middle {
-  display: table-cell;
-  vertical-align: middle;
-}
-.loading-container-inner {
-  margin-left: auto;
-  margin-right: auto;
-  width: fit-content;
-  text-align: center;
-}
-
 .spinner {
   margin-bottom: 100px;
 }
 .loading-text {
   text-align: center;
   width: 100%;
-  /* margin-top: 200px; */
-  font-size: 55px;
+  font-size: 65px;
 }
 </style>
 
