@@ -9,8 +9,7 @@
         <error></error>
       </template>
       <template v-else>
-        <dashboard v-if="isLoggedIn"></dashboard>
-        <router-view v-else></router-view>
+        <router-view></router-view>
       </template>
     </transition>
   </v-app>
@@ -26,7 +25,7 @@ import error from "./Error.vue";
 import { mapGetters } from "vuex";
 
 @Component({
-  components: { dashboard, error },
+  components: { error },
   computed: {
     ...mapGetters({
       isLoggedIn: "identity/oidcIsAuthenticated",
@@ -48,7 +47,7 @@ body {
   width: 0;
 }
 
-.litgraph-title {
+.styled-title {
   color: #2eccfa;
   font-family: "Charmonman";
   cursor: default;

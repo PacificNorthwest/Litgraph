@@ -7,8 +7,10 @@ import { vuexOidcCreateRouterMiddleware } from "vuex-oidc"
 
 import AppComponent from "./components/App.vue"
 import DashboardComponent from "./components/Dashboard.vue"
+import MaterialsCollectionComponent from "./components/MaterialsCollection.vue"
 import OidcCallbackComponent from "./components/OidcCallback.vue"
 import ErrorComponent from "./components/Error.vue"
+import WelcomeComponent from "./components/Welcome.vue"
 
 import store from "./vuexStore"
 
@@ -16,7 +18,10 @@ Vue.use(Vuetify);
 Vue.use(Router);
 
 let routes = [
-    { path: "/", component: DashboardComponent, meta: { isPublic: false } },
+    { path: "/", component: WelcomeComponent, meta: { isPublic: true }},
+    { path: "/dashboard", component: DashboardComponent, children: [
+        { path: "", component: MaterialsCollectionComponent }
+    ] },
     { path: "/oidc", component: OidcCallbackComponent, meta: { isPublic: true, isOidcCallback: true } },
     { path: "/error", component: ErrorComponent, meta: { isPublic: true }}
 ]
