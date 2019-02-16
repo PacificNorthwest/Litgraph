@@ -20,6 +20,7 @@ using Microsoft.AspNetCore.Authentication;
 using IdentityServer4.Stores;
 using IdentityServer4.Events;
 using Litgraph.IdentityServer.DAL;
+using IdentityServer4.Extensions;
 
 namespace Litgraph.IdentityServer.Controllers
 {
@@ -120,15 +121,13 @@ namespace Litgraph.IdentityServer.Controllers
                 throw new InvalidReturnUrlException();
         }
 
-        // [HttpPost, Route("signout"), Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        // public async Task SignOut()
-        // {
-        //     if (await this._userManager.GetUserAsync(this.User) is UserEntity user)
-        //     {
-        //         user.JwtToken = null;
-        //         await this._context.SaveChangesAsync();
-        //     }
-        //     await this._signInManager.SignOutAsync();
-        // }
+        [HttpGet]
+        public async Task<IActionResult> Logout(string logoutId)
+        {
+            await _signInManager.SignOutAsync();
+            await _events.RaiseAsync(new UserLogoutSuccessEvent(User.GetSubjectId(), User.GetDisplayName()));
+            var context = await _identityInteraction.GetLogoutContextAsync(logoutId);
+            return Redirect(context.PostLogoutRedirectUri);
+        }
     }
 }
