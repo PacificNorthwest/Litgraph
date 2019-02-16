@@ -20,6 +20,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Litgraph.IdentityServer.Middleware;
+using IdentityServer4.Stores;
+using IdentityServer4.EntityFramework.Stores;
 
 namespace Litgraph.IdentityServer
 {
@@ -70,8 +72,11 @@ namespace Litgraph.IdentityServer
                 options.Events.RaiseFailureEvents = true;
                 options.Events.RaiseInformationEvents = true;
                 options.Events.RaiseSuccessEvents = true;
-
-            }).AddOperationalStore(options => options.ConfigureDbContext = b => b.UseSqlServer(_conf.GetConnectionString("LitgraphDB"), db => db.MigrationsAssembly(migrationsAssembly)))
+                options.Caching.ClientStoreExpiration = new TimeSpan(0, 5, 0);
+            }).AddInMemoryCaching()
+              .AddClientStoreCache<CachingClientStore<ClientStore>>()
+              .AddResourceStoreCache<CachingResourceStore<ResourceStore>>()
+              .AddOperationalStore(options => options.ConfigureDbContext = b => b.UseSqlServer(_conf.GetConnectionString("LitgraphDB"), db => db.MigrationsAssembly(migrationsAssembly)))
               .AddConfigurationStore(options => options.ConfigureDbContext = b => b.UseSqlServer(_conf.GetConnectionString("LitgraphDB"), db => db.MigrationsAssembly(migrationsAssembly)))
               .AddAspNetIdentity<UserEntity>();
 
