@@ -1,15 +1,12 @@
 <template>
   <span
     ref="container"
-    class="popover-container"
-    @click="revealCard = !revealCard"
-    @blur="revealCard = false"
-  >
+    class="popover-container">
     <slot name="activator"></slot>
     <v-slide-y-transition>
       <v-card class="profile-card dynamic-arrow elevation-15" v-show="revealCard">
         <v-img id="profile-picture" contain :src="defaultProfileImage"></v-img>
-        <v-card-text primary-title fluid grid-list-1 class="pa-5">
+        <v-card-text primary-title fluid grid-list-1 class="pa-5" v-if="user">
           <h2 class="title mb-0">Username:</h2>
           <h2 class="headline mb-3">{{ user.name }}</h2>
           <h2 class="title mb-0">Email:</h2>
@@ -49,6 +46,11 @@ export default class ProfileCardComponent extends Vue {
   revealCard: boolean = false;
 
   mounted() {
+    if (this.$slots.activator && this.$slots.activator.length > 0) {
+        let activator = this.$slots.activator[0].componentInstance;
+        activator!.$el.addEventListener('click', () => { this.revealCard = !this.revealCard });
+    }
+
     let anchorWidth = (this.$refs.container as any).clientWidth;
     CssUtils.createCssSelector(
       "dynamic-arrow::before",
