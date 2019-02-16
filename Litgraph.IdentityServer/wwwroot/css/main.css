@@ -52,7 +52,6 @@ span {
     z-index: -1;
     position: absolute;
     width: 100%;
-    opacity: 0.5;
     height: -webkit-fill-available;
-    background: url("/images/tic-tac-toe.png") repeat;
+    background: url("/images/topography.png") repeat;
 }

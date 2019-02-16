@@ -13,7 +13,7 @@
             <form method="post" asp-route="Login">
                 <input type="hidden" asp-for="ReturnUrl" value="@Model.ReturnUrl"/>
                 <div class="form-group">
-                    <input type="text" placeholder="Username" asp-for="UserName" class="form-control form-input" style="margin-bottom: 20px" spellcheck="false" autofocus/>                    
+                    <input type="text" placeholder="Username" asp-for="UserName" class="form-control form-input" spellcheck="false" autofocus/>                    
                     <span asp-validation-for="UserName" class="text-danger"></span>
                 </div>
                 <div style="margin-bottom:45px" class="formm-group">
