@@ -1,7 +1,7 @@
 <template>
   <div class="dashboard-container">
     <v-toolbar class="dashboard-header">
-      <v-toolbar-title class="litgraph-title dashboard-title">Litgraph</v-toolbar-title>
+      <v-toolbar-title class="styled-title dashboard-title">Litgraph</v-toolbar-title>
       <v-breadcrumbs :items="breadcrumbItems" class="depth-navigation-menu">
         <v-icon color="white" slot="divider">arrow_forward_ios</v-icon>
         <template slot="item" slot-scope="props">
@@ -21,15 +21,19 @@
             v-show="revealSearchField"
             @blur="revealSearchField = false"
             ref="searchField"
+            append-icon="none"
           ></v-autocomplete>
         </transition>
         <v-btn fab class="icon-button circle" @click="toggleSearchField">
           <v-icon color="#2eccfa" large>search</v-icon>
         </v-btn>
 
-        <v-btn fab class="icon-button circle">
-          <v-icon color="#2eccfa" large>person</v-icon>
-        </v-btn>
+        <profile-card>
+          <v-btn fab slot="activator" class="icon-button circle">
+            <v-icon color="#2eccfa" large>person</v-icon>
+          </v-btn>
+        </profile-card>
+         
       </v-toolbar-items>
     </v-toolbar>
 
@@ -38,7 +42,8 @@
         class="hamburger hamburger-button hamburger--collapse"
         :class="{ 'is-active': isSideMenuExpanded }"
         style="color: white"
-        @click="isSideMenuExpanded = !isSideMenuExpanded">
+        @click="isSideMenuExpanded = !isSideMenuExpanded"
+      >
         <span class="hamburger-box">
           <span class="hamburger-inner"></span>
         </span>
@@ -46,7 +51,7 @@
     </v-navigation-drawer>
 
     <div class="dashboard-content">
-        <h1 style="margin-left: 30px">Dashboard content</h1>
+      <router-view></router-view>
     </div>
   </div>
 </template>
@@ -56,7 +61,10 @@ import Vue from "vue";
 import Component from "vue-class-component";
 import { mapGetters } from "vuex";
 
+import profilecard from "./controls/ProfileCard.vue";
+
 @Component({
+  components: { 'profile-card': profilecard },
   computed: {
     ...mapGetters({
       user: "identity/oidcUser"
@@ -83,17 +91,17 @@ export default class DashboardComponent extends Vue {
 
 .dashboard-container {
   overflow: hidden;
-  height: 100%
+  height: 100%;
 }
 
 .sidebar {
   background-color: #43516e;
-  position:relative;
-  float: left
+  position: relative;
+  float: left;
 }
 
 .hamburger-button {
-    margin: 0px 5px;
+  margin: 0px 5px;
 }
 .hamburger-button:focus {
   outline: 0;
@@ -110,7 +118,7 @@ export default class DashboardComponent extends Vue {
 
 .dashboard-header {
   background-color: #3a4660;
-  padding: 7px;
+  padding: 10px;
 }
 
 .depth-navigation-menu {
@@ -124,7 +132,7 @@ export default class DashboardComponent extends Vue {
 }
 
 .dashboard-title {
-  padding: 5px 20px;
+  padding: 5px 20px 5px 5px;
   font-size: 35px;
 }
 
@@ -134,6 +142,16 @@ export default class DashboardComponent extends Vue {
   margin: 5px auto 15px auto;
   width: 360px;
   font-size: 18px;
+}
+
+.slide-fade-enter-active,
+.slide-fade-leave-active {
+  transition: all 0.5s;
+}
+.slide-fade-enter,
+.slide-fade-leave-to {
+  opacity: 0;
+  transform: translateX(50px);
 }
 
 .icon-button {
@@ -151,7 +169,7 @@ export default class DashboardComponent extends Vue {
 }
 
 .dashboard-content {
-    display: flex;
+  display: flex;
 }
 </style>
 
