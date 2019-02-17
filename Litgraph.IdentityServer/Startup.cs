@@ -42,14 +42,14 @@ namespace Litgraph.IdentityServer
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddOptions();
-            services.AddDbContext<LitgraphContext>(options => 
-                    options.UseSqlServer(_conf.GetConnectionString("LitgraphDB")));
-            
+            services.AddDbContext<LitgraphContext>(options =>
+                    options.UseSqlServer(_conf.GetConnectionString("LITGRAPHDB")));
+
             services.AddIdentity<UserEntity, IdentityRole>()
                     .AddEntityFrameworkStores<LitgraphContext>()
                     .AddDefaultTokenProviders();
 
-            services.Configure<IdentityOptions>(options => 
+            services.Configure<IdentityOptions>(options =>
             {
                 options.Password.RequireDigit = false;
                 options.Password.RequireLowercase = false;
@@ -61,12 +61,19 @@ namespace Litgraph.IdentityServer
                 options.Lockout.AllowedForNewUsers = true;
                 options.User.RequireUniqueEmail = false;
             });
-            
+
+            if (!_env.IsDevelopment())
+                services.AddHttpsRedirection(options =>
+                {
+                    options.RedirectStatusCode = StatusCodes.Status308PermanentRedirect;
+                    options.HttpsPort = 443;
+                });
+
             services.AddMvc();
             services.AddLitgraphServices();
 
-            var migrationsAssembly = typeof (Startup).GetTypeInfo ().Assembly.GetName ().Name;
-            var builder = services.AddIdentityServer(options => 
+            var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
+            var builder = services.AddIdentityServer(options =>
             {
                 options.Events.RaiseErrorEvents = true;
                 options.Events.RaiseFailureEvents = true;
@@ -76,8 +83,8 @@ namespace Litgraph.IdentityServer
             }).AddInMemoryCaching()
               .AddClientStoreCache<CachingClientStore<ClientStore>>()
               .AddResourceStoreCache<CachingResourceStore<ResourceStore>>()
-              .AddOperationalStore(options => options.ConfigureDbContext = b => b.UseSqlServer(_conf.GetConnectionString("LitgraphDB"), db => db.MigrationsAssembly(migrationsAssembly)))
-              .AddConfigurationStore(options => options.ConfigureDbContext = b => b.UseSqlServer(_conf.GetConnectionString("LitgraphDB"), db => db.MigrationsAssembly(migrationsAssembly)))
+              .AddOperationalStore(options => options.ConfigureDbContext = b => b.UseSqlServer(_conf.GetConnectionString("LITGRAPHDB"), db => db.MigrationsAssembly(migrationsAssembly)))
+              .AddConfigurationStore(options => options.ConfigureDbContext = b => b.UseSqlServer(_conf.GetConnectionString("LITGRAPHDB"), db => db.MigrationsAssembly(migrationsAssembly)))
               .AddAspNetIdentity<UserEntity>();
 
             if (_env.IsDevelopment())
@@ -85,9 +92,9 @@ namespace Litgraph.IdentityServer
             else builder.AddSigningCredential("*Certificate name from env variable here*");
         }
 
-        public void Configure(IApplicationBuilder app, 
-                              IHostingEnvironment env, 
-                              ISeedDataInitializer seedDataInitializer, 
+        public void Configure(IApplicationBuilder app,
+                              IHostingEnvironment env,
+                              ISeedDataInitializer seedDataInitializer,
                               ILoggerFactory loggerFactory)
         {
             if (env.IsDevelopment())
@@ -103,7 +110,7 @@ namespace Litgraph.IdentityServer
             app.UseIdentityServer();
 
             app.UseMiddleware<ExceptionsMiddleware>();
-            
+
             app.UseMvc(routes => routes.MapRoute(name: "default", template: "{controller}/{action}"));
 
             seedDataInitializer.Initialize().GetAwaiter().GetResult();

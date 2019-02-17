@@ -1,0 +1,29 @@
+version: '3'
+services:
+  identity:
+    image: litgraph-identity-server
+    build: ./Litgraph.IdentityServer
+    container_name: litgraph-identity-server
+    depends_on:
+      - identity-db
+    env_file: identity.env
+    networks:
+      - identity-service-network
+    ports:
+      - "5000:80"
+      - "5001:443"
+    volumes:
+      - ${HOME}/.aspnet/https:/https/
+      
+  identity-db:
+    image: "mcr.microsoft.com/mssql/server"
+    container_name: "identity-db"
+    env_file: identity-db.env
+    networks:
+      - identity-service-network
+    ports:
+      - "1433:1433"
+
+
+networks:
+  identity-service-network:

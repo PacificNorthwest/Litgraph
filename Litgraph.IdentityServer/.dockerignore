@@ -1,0 +1,4 @@
+dockerfile
+/.vscode/
+/bin/
+/obj/

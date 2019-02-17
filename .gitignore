@@ -6,3 +6,4 @@ build.js
 *.log
 Sketches/
 Litgraph.IdentityServer/tempkey.rsa
+*.env
