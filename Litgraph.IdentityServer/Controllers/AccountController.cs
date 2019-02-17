@@ -80,7 +80,11 @@ namespace Litgraph.IdentityServer.Controllers
                 }
 
                 await _events.RaiseAsync(new UserLoginFailureEvent(signInModel.UserName, "Invalid credentials"));
-                ModelState.AddModelError(string.Empty, "Invalid username or password");
+
+                if (result.IsLockedOut)
+                    ModelState.AddModelError("Password", "Accounted is locked out on 5 minutes due to a multiple failed login attempts");
+                else
+                    ModelState.AddModelError("Password", "Invalid username or password");
             }
 
             return View(new SignInModel { ReturnUrl = signInModel.ReturnUrl });
@@ -102,7 +106,11 @@ namespace Litgraph.IdentityServer.Controllers
             var result = await this._userManager.CreateAsync(user, signUpModel.Password);
 
             if (!result.Succeeded)
-                throw new SignUpException("Failed to create user with the given username and password");
+            {
+                foreach (var error in result.Errors)
+                    ModelState.AddModelError("Summary", error.Description);
+                return View(signUpModel);
+            }
 
             await this._userManager.AddToRoleAsync(user, Roles.USER);
             await this._signInManager.PasswordSignInAsync(user, signUpModel.Password, true, lockoutOnFailure: true);

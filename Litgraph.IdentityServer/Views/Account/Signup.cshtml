@@ -12,6 +12,17 @@
     <div class="card signup-card shadow p-2">
         <div class="card-body">
             <form method="post" asp-action="Signup">
+                @if (Html.ViewData.ModelState.ErrorCount > 0) {
+                    var summary = Html.ViewData.ModelState["Summary"];
+                    if (summary != null)
+                    {
+                        foreach(var error in summary.Errors)
+                        {
+                            <span class="text-danger">@error.ErrorMessage</span>
+                        }
+                    }  
+                }
+
                 <input type="hidden" asp-for="ReturnUrl" value="@Model.ReturnUrl"/>
                 <div class="form-group">
                     <input type="text" asp-for="UserName" class="form-control form-input" placeholder="Username" spellcheck="false" autofocus/>
