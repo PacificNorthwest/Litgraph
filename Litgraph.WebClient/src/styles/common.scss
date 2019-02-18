@@ -1,0 +1,38 @@
+$font-stack: 'Charmonman';
+$main-color: #2eccfa;
+$primary-dark-color: #3a4660;
+$secondary-dark-color: #43516e;
+
+.primary-colored {
+    color: $main-color !important
+}
+
+%unselectable {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    cursor: default;
+}
+
+@mixin transform($property) {
+    -webkit-transform: $property;
+    -ms-transform: $property;
+    transform: $property;
+}
+
+.circle {
+    border-radius: 100%;
+
+    button {
+        width: fit-content;
+        height: fit-content;
+        text-align: center;
+    }
+}
+
+.circle:focus {
+    outline: none;
+}

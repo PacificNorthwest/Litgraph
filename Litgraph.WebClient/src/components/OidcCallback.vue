@@ -35,12 +35,13 @@ export default Vue.extend({
 });
 </script>
 
-<style scoped>
-@import "./../css/dots-spinner-animation.css";
+<style lang="scss" scoped>
+@import "./../styles/dots-spinner-animation.scss";
 
 .spinner {
   margin-bottom: 100px;
 }
+
 .loading-text {
   text-align: center;
   width: 100%;

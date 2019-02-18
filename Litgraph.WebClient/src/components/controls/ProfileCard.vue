@@ -12,7 +12,7 @@
           <h2 class="title mb-0">Email:</h2>
           <h2 class="headline mb-0">{{ user.email }}</h2>
           <div class="logout-container">
-            <v-btn flat large color="#2eccfa" class="logout-button mt-5" @click.prevent="signout">Sign out</v-btn>
+            <v-btn flat large class="logout-button mt-5" @click.prevent="signout">Sign out</v-btn>
           </div>
         </v-card-text>
       </v-card>
@@ -60,7 +60,9 @@ export default class ProfileCardComponent extends Vue {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped >
+@import "./../../styles/common.scss";
+
 .profile-card {
   width: 500px;
   height: fit-content;
@@ -93,6 +95,7 @@ export default class ProfileCardComponent extends Vue {
 .logout-button {
   font-size: 25px;
   padding: 10px 25px;
+  color: $main-color;
 }
 
 .logout-container {

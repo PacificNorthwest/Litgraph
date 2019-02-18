@@ -2,7 +2,7 @@
   <div class="dashboard-container">
     <v-toolbar class="dashboard-header">
       <v-toolbar-title class="styled-title dashboard-title">Litgraph</v-toolbar-title>
-      <v-breadcrumbs :items="breadcrumbItems" class="depth-navigation-menu">
+      <v-breadcrumbs :items="breadcrumbItems" class="ml-5">
         <v-icon color="white" slot="divider">arrow_forward_ios</v-icon>
         <template slot="item" slot-scope="props">
           <a href class="depth-navigation-item">{{ props.item }}</a>
@@ -24,13 +24,13 @@
             append-icon="none"
           ></v-autocomplete>
         </transition>
-        <v-btn fab class="icon-button circle" @click="toggleSearchField">
-          <v-icon color="#2eccfa" large>search</v-icon>
+        <v-btn fab class="icon-button" @click="toggleSearchField">
+          <v-icon class="primary-colored" large>search</v-icon>
         </v-btn>
 
         <profile-card>
-          <v-btn fab slot="activator" class="icon-button circle">
-            <v-icon color="#2eccfa" large>person</v-icon>
+          <v-btn fab slot="activator" class="icon-button">
+            <v-icon class="primary-colored" large>person</v-icon>
           </v-btn>
         </profile-card>
          
@@ -86,43 +86,18 @@ export default class DashboardComponent extends Vue {
 }
 </script>
 
-<style scoped>
-@import "./../css/hamburger.css";
+<style lang="scss" scoped>
+@import "./../styles/hamburger.scss";
+@import "./../styles/common.scss";
 
 .dashboard-container {
   overflow: hidden;
   height: 100%;
 }
 
-.sidebar {
-  background-color: #43516e;
-  position: relative;
-  float: left;
-}
-
-.hamburger-button {
-  margin: 0px 5px;
-}
-.hamburger-button:focus {
-  outline: 0;
-}
-
-.hamburger-inner,
-.hamburger-inner::before,
-.hamburger-inner::after,
-.hamburger.is-active .hamburger-inner,
-.hamburger.is-active .hamburger-inner::before,
-.hamburger.is-active .hamburger-inner::after {
-  background-color: white;
-}
-
 .dashboard-header {
-  background-color: #3a4660;
+  background-color: $primary-dark-color;
   padding: 10px;
-}
-
-.depth-navigation-menu {
-  margin-left: 60px;
 }
 
 .depth-navigation-item {
@@ -132,7 +107,8 @@ export default class DashboardComponent extends Vue {
 }
 
 .dashboard-title {
-  padding: 5px 20px 5px 5px;
+  padding: 5px;
+  padding-right: 20px;
   font-size: 35px;
 }
 
@@ -151,21 +127,45 @@ export default class DashboardComponent extends Vue {
 .slide-fade-enter,
 .slide-fade-leave-to {
   opacity: 0;
-  transform: translateX(50px);
+  @include transform(translateX(50px))
 }
 
 .icon-button {
-  background-color: #3a4660 !important;
+  @extend .circle;
+  
+  background-color: $primary-dark-color !important;
   border: hidden;
   margin: 10px;
   padding: 10px;
 }
 .icon-button:hover {
-  background-color: #43516e;
+  background-color: $secondary-dark-color;
 }
 .icon-button:focus {
-  background-color: #3a4660;
+  background-color: $primary-dark-color;
   border: hidden;
+}
+
+.sidebar {
+  background-color: $secondary-dark-color;
+  position: relative;
+  float: left;
+}
+
+.hamburger-button {
+  margin: 0px 5px;
+}
+.hamburger-button:focus {
+  outline: 0;
+}
+
+.hamburger-inner,
+.hamburger-inner::before,
+.hamburger-inner::after,
+.hamburger.is-active .hamburger-inner,
+.hamburger.is-active .hamburger-inner::before,
+.hamburger.is-active .hamburger-inner::after {
+  background-color: white;
 }
 
 .dashboard-content {

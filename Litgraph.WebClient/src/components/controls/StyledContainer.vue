@@ -1,23 +1,23 @@
 <template>
-    <div class="container-outer">
-        <div class="container-middle">
-            <div class="container-inner">
-                <slot></slot>
-            </div>
-        </div>
+  <div class="container-outer">
+    <div class="container-middle">
+      <div class="container-inner">
+        <slot></slot>
+      </div>
     </div>
+  </div>
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import Vue from "vue";
 export default Vue.extend({
-    name: "styled-container"
-})
+  name: "styled-container"
+});
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .container-outer {
- background: url("./../../images/topography.png") repeat;
+  background: url("./../../images/topography.png") repeat;
   width: 100%;
   height: -webkit-fill-available;
   display: table;
@@ -26,11 +26,11 @@ export default Vue.extend({
   left: 0;
 }
 .container-middle {
-    display: table-cell;
+  display: table-cell;
   vertical-align: middle;
 }
 .container-inner {
-margin-left: auto;
+  margin-left: auto;
   margin-right: auto;
   width: fit-content;
   text-align: center;

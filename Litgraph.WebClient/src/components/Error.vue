@@ -16,7 +16,7 @@ export default Vue.extend({
 });
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 #header {
   font-size: 150px;
   margin-bottom: 100px

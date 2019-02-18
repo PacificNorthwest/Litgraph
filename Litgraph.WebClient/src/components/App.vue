@@ -36,8 +36,8 @@ import { mapGetters } from "vuex";
 export default class AppComponent extends Vue { }
 </script>
 
-<style>
-@import "./../css/common.css";
+<style lang="scss">
+@import "./../styles/common.scss";
 
 body {
     margin: 0;
@@ -48,15 +48,10 @@ body {
 }
 
 .styled-title {
-  color: #2eccfa;
-  font-family: "Charmonman";
-  cursor: default;
+  @extend .primary-colored;
+  @extend %unselectable;
+
+  font-family: $font-stack;
   font-weight: bold;
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
 }
 </style>
