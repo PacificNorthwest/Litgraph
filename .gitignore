@@ -7,3 +7,5 @@ build.js
 Sketches/
 Litgraph.IdentityServer/tempkey.rsa
 *.env
+litgraph_venv
+*.pyc
