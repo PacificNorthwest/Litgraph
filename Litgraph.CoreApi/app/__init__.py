@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_graphql import GraphQLView
 from app.schema import schema
+from app.data.repository import get_graph_context
 
 def create_app():
     app = Flask(__name__)
@@ -8,8 +9,9 @@ def create_app():
         '/graphql',
         view_func=GraphQLView.as_view(
             'graphql',
-            schema=schema,
-            graphiql=True
+            schema = schema,
+            graphiql = True,
+            get_context = lambda: { 'Graph': get_graph_context() }
         )
     )
     return app

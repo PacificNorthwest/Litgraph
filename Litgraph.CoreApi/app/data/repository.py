@@ -2,7 +2,8 @@
 from py2neo.database import Graph
 from py2neo.ogm import GraphObject, Property, RelatedTo
 
-graph = Graph(auth=('user', 'pass'))
+def get_graph_context():
+    return Graph(auth=('user', 'pass'))
 
 class Character(GraphObject):
     __primarykey__ = 'name'
@@ -33,6 +34,6 @@ class User(GraphObject):
 
     materials = RelatedTo(Material, 'OWNS')
 
-def get_user(email):
-    return User.match(graph, email).first()
+def get_user(context, email):
+    return User.match(context['Graph'], email).first()
 
