@@ -1,5 +1,5 @@
 import graphene
-from app.data import repository
+from app.data import dal
 
 class CharacterScheme(graphene.ObjectType):
     id = graphene.String()
@@ -26,6 +26,6 @@ class Query(graphene.ObjectType):
     user = graphene.Field(UserSchema, email=graphene.String())
 
     def resolve_user(self, info, email):
-        return repository.get_user(info.context, email)
+        return dal.resolve_user(info.context, email)
 
 schema = graphene.Schema(query=Query)

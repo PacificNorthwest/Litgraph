@@ -1,7 +1,7 @@
 from flask import Flask
 from flask_graphql import GraphQLView
 from app.schema import schema
-from app.data.repository import get_graph_context
+from app.data.dal import get_graph_context
 
 def create_app():
     app = Flask(__name__)

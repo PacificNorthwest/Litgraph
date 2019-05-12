@@ -34,6 +34,6 @@ class User(GraphObject):
 
     materials = RelatedTo(Material, 'OWNS')
 
-def get_user(context, email):
+def resolve_user(context, email):
     return User.match(context['Graph'], email).first()
 
