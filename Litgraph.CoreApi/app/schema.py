@@ -7,7 +7,7 @@ class CharacterScheme(graphene.ObjectType):
 
 class LocationScheme(graphene.ObjectType):
     id = graphene.String()
-    name = graphene.String()
+    title = graphene.String()
 
 class MaterialSchema(graphene.ObjectType):
     id = graphene.String()
