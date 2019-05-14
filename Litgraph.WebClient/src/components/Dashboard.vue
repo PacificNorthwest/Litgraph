@@ -25,12 +25,12 @@
           ></v-autocomplete>
         </transition>
         <v-btn fab class="icon-button" @click="toggleSearchField">
-          <v-icon class="primary-colored" large>search</v-icon>
+          <v-icon class="primary-colored">search</v-icon>
         </v-btn>
 
         <profile-card>
           <v-btn fab slot="activator" class="icon-button">
-            <v-icon class="primary-colored" large>person</v-icon>
+            <v-icon class="primary-colored">person</v-icon>
           </v-btn>
         </profile-card>
          
@@ -97,19 +97,18 @@ export default class DashboardComponent extends Vue {
 
 .dashboard-header {
   background-color: $primary-dark-color;
-  padding: 10px;
 }
 
 .depth-navigation-item {
   color: white;
-  font-size: 22px;
+  font-size: 16px;
   text-decoration: none;
 }
 
 .dashboard-title {
   padding: 5px;
   padding-right: 20px;
-  font-size: 35px;
+  font-size: 25px;
 }
 
 .search-input {
@@ -136,7 +135,9 @@ export default class DashboardComponent extends Vue {
   background-color: $primary-dark-color !important;
   border: hidden;
   margin: 10px;
-  padding: 10px;
+  padding: 5px;
+  width: 45px;
+  height: 45px
 }
 .icon-button:hover {
   background-color: $secondary-dark-color;
@@ -151,9 +152,15 @@ export default class DashboardComponent extends Vue {
   position: relative;
   float: left;
 }
+.sidebar.v-navigation-drawer--mini-variant {
+  width: 65px !important
+}
 
 .hamburger-button {
-  margin: 0px 5px;
+  margin: 0px 2px;
+  position: absolute;
+  padding: 15px 0;
+  left: 10px;
 }
 .hamburger-button:focus {
   outline: 0;

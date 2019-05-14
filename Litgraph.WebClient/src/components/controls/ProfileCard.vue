@@ -6,7 +6,7 @@
     <v-slide-y-transition>
       <v-card class="profile-card dynamic-arrow elevation-15" v-show="revealCard">
         <v-img id="profile-picture" contain :src="defaultProfileImage"></v-img>
-        <v-card-text primary-title fluid grid-list-1 class="pa-5" v-if="user">
+        <v-card-text primary-title fluid grid-list-1 class="pa-4" v-if="user">
           <h2 class="title mb-0">Username:</h2>
           <h2 class="headline mb-3">{{ user.name }}</h2>
           <h2 class="title mb-0">Email:</h2>
@@ -64,7 +64,7 @@ export default class ProfileCardComponent extends Vue {
 @import "./../../styles/common.scss";
 
 .profile-card {
-  width: 500px;
+  width: 350px;
   height: fit-content;
   position: absolute;
   direction: ltr;
@@ -88,7 +88,7 @@ export default class ProfileCardComponent extends Vue {
 }
 
 #profile-picture {
-  max-height: 150px;
+  max-height: 100px;
   margin: 40px auto;
 }
 
