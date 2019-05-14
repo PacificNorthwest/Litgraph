@@ -3,7 +3,7 @@ from py2neo.database import Graph
 from py2neo.ogm import GraphObject, Property, RelatedTo
 
 def get_graph_context():
-    return Graph(auth=('user', 'pass'))
+    return Graph(auth=('neo4j', 'pass'), host='localhost')
 
 class Character(GraphObject):
     __primarykey__ = 'name'

@@ -9,6 +9,7 @@ services:
     env_file: identity.env
     networks:
       - identity-service-network
+      - main-network
     ports:
       - "5000:80"
       - "5001:443"
@@ -23,7 +24,18 @@ services:
       - identity-service-network
     ports:
       - "1433:1433"
+  
+  graph-db:
+    image: "neo4j"
+    container_name: "graph-db"
+    env_file: graph-db.env
+    networks:
+      - main-network
+    ports:
+      - "7474:7474"
+      - "7687:7687"
 
 
 networks:
   identity-service-network:
+  main-network:
