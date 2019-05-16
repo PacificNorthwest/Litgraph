@@ -1,5 +1,6 @@
 import graphene
 from app.data import dal
+from graphene_abstracted import AbstractedMutation
 
 class CharacterScheme(graphene.ObjectType):
     id = graphene.String()
@@ -22,6 +23,12 @@ class UserSchema(graphene.ObjectType):
     email = graphene.String()
     materials = graphene.List(MaterialSchema)
 
+class UserMutation(AbstractedMutation):
+    class Arguments:
+        email = graphene.String()
+
+    successful = graphene.Boolean()
+    errors = graphene.List(graphene.String)
 class Query(graphene.ObjectType):
     user = graphene.Field(UserSchema, email=graphene.String())
 
