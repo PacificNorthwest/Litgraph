@@ -28,7 +28,7 @@ namespace Litgraph.IdentityServer.Model
                     AllowAccessTokensViaBrowser = true,
                     RequireConsent = false,
                     RequireClientSecret = false,
-
+                    AccessTokenType = AccessTokenType.Jwt,
                     AllowedScopes =
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
