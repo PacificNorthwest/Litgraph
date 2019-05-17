@@ -10,7 +10,7 @@ class AbstractedMutationMeta(SubclassWithMeta_Meta):
 
         for base in bases:
             if issubclass(base, AbstractedGrapheneBaseType):
-                if 'Arguments' in base.__dict__:
+                if 'Arguments' in base.__dict__ and 'Arguments' in class_dict:
                     for key, value in base.Arguments.__dict__.items():
                         if key not in class_dict['Arguments'].__dict__:
                             setattr(class_dict['Arguments'], key, value)

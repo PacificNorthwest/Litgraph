@@ -1,7 +1,11 @@
+import graphene
 from flask import Flask
 from flask_graphql import GraphQLView
-from app.schema import schema
+from app.mutations import Mutations
+from app.queries import Query
 from app.data.dal import get_graph_context
+
+schema = graphene.Schema(query=Query, mutation=Mutations)
 
 def create_app():
     app = Flask(__name__)

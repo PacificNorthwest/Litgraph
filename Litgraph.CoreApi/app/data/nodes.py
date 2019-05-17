@@ -1,20 +1,23 @@
 from py2neo.ogm import GraphObject, Property, RelatedTo
 
 class Character(GraphObject):
-    __primarykey__ = 'name'
+    __primarykey__ = 'id'
 
+    id = Property()
     name = Property()
     brief = Property()
     
 class Location(GraphObject):
-    __primarykey__ = 'title'
+    __primarykey__ = 'id'
 
+    id = Property()
     title = Property()
     brief = Property()
 
 class Material(GraphObject):
-    __primarykey__ = 'title'
+    __primarykey__ = 'id'
 
+    id = Property()
     title = Property()
     brief = Property()
     
