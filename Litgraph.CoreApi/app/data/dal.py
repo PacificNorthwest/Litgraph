@@ -3,8 +3,15 @@ from py2neo.database import Graph
 from app.data import nodes
 from app.exceptions import NodeNotFoundError, UserNotFoundError
 
-def get_graph_context():
-    return Graph(auth=('neo4j', 'pass'), host='localhost')
+def get_graph_context(config):
+    if config is None:
+        return Graph(auth=('neo4j', 'pass'), host='localhost')
+
+    login = config.get('NEO4J_LOGIN', 'neo4j')
+    password = config.get('NEO4J_PASS', 'pass')
+    host = config.get('NEO4J_HOST', 'localhost')
+
+    return Graph(auth=(login, password), host=host)
 
 
 def resolve_user(context, email):
