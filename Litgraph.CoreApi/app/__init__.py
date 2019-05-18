@@ -1,5 +1,6 @@
 import graphene, os
 from flask import Flask
+from flask_cors import CORS
 from flask_graphql import GraphQLView
 from app.mutations import Mutations
 from app.queries import Query
@@ -23,4 +24,5 @@ def create_app():
             get_context = lambda: { 'Graph': get_graph_context(config), 'Config': config }
         )
     )
+    CORS(app)
     return app

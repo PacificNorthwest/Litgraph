@@ -1,0 +1,18 @@
+.container-outer {
+    width: 100%;
+    height: -webkit-fill-available;
+    display: table;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  .container-middle {
+    display: table-cell;
+    vertical-align: middle;
+  }
+  .container-inner {
+    margin-left: auto;
+    margin-right: auto;
+    width: fit-content;
+    text-align: center;
+  }

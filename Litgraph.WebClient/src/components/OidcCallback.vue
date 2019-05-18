@@ -1,9 +1,6 @@
 <template>
   <styled-container>
-    <div class="spinner">
-      <div class="double-bounce1"></div>
-      <div class="double-bounce2"></div>
-    </div>
+    <loading-spinner class="spinner"></loading-spinner>
     <h2 class="styled-title loading-text">Loading</h2>
   </styled-container>
 </template>
@@ -13,10 +10,14 @@ import Vue from "vue";
 import { mapActions, mapMutations } from "vuex";
 
 import StyledContainer from "./controls/StyledContainer.vue";
+import Spinner from "./controls/LoadingSpinner.vue"
 
 export default Vue.extend({
   name: "OidcCallback",
-  components: { "styled-container": StyledContainer },
+  components: { 
+    "styled-container": StyledContainer,
+    "loading-spinner": Spinner
+  },
   methods: {
     ...mapActions({
       oidcSignInCallback: "identity/oidcSignInCallback"

@@ -5,7 +5,7 @@
       <v-breadcrumbs :items="breadcrumbItems" class="ml-5">
         <v-icon color="white" slot="divider">arrow_forward_ios</v-icon>
         <template slot="item" slot-scope="props">
-          <a href class="depth-navigation-item">{{ props.item }}</a>
+          <a href class="depth-navigation-item subheading">{{ props.item }}</a>
         </template>
       </v-breadcrumbs>
       <v-spacer></v-spacer>
@@ -64,7 +64,9 @@ import { mapGetters } from "vuex";
 import profilecard from "./controls/ProfileCard.vue";
 
 @Component({
-  components: { 'profile-card': profilecard },
+  components: { 
+    'profile-card': profilecard
+  },
   computed: {
     ...mapGetters({
       user: "identity/oidcUser"

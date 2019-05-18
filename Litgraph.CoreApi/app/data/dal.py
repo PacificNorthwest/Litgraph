@@ -21,6 +21,10 @@ def resolve_user(context, email):
     
     return user
 
+def resolve_materials(context, user_email):
+    user = resolve_user(context, user_email)
+    return user.materials
+
 def create_material(context, email, title):
     try:
         user = resolve_user(context, email)

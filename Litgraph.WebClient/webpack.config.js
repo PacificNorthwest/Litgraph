@@ -6,7 +6,7 @@ module.exports = {
     entry: './src/main.ts',
     watch: true,
     output: {
-        path: path.resolve(__dirname, './../Litgraph.Server/wwwroot/dist'),
+        path: path.resolve(__dirname, './dist'),
         publicPath: '/dist/',
         filename: 'build.js'
     },
