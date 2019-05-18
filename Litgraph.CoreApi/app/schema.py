@@ -1,17 +1,17 @@
 import graphene
 
 class CharacterSchema(graphene.ObjectType):
-    id = graphene.String()
+    id = graphene.ID(required=True)
     name = graphene.String()
     brief = graphene.String()
 
 class LocationSchema(graphene.ObjectType):
-    id = graphene.String()
+    id = graphene.ID(required=True)
     title = graphene.String()
     brief = graphene.String()
 
 class MaterialSchema(graphene.ObjectType):
-    id = graphene.String()
+    id = graphene.ID(required=True)
     title = graphene.String()
     brief = graphene.String()
 
@@ -19,7 +19,6 @@ class MaterialSchema(graphene.ObjectType):
     locations = graphene.List(LocationSchema)
 
 class UserSchema(graphene.ObjectType):
-    id = graphene.String()
     username = graphene.String()
     email = graphene.String()
     materials = graphene.List(MaterialSchema)
