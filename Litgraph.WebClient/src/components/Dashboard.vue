@@ -90,7 +90,6 @@ export default class DashboardComponent extends Vue {
 
 <style lang="scss" scoped>
 @import "./../styles/hamburger.scss";
-@import "./../styles/common.scss";
 
 .dashboard-container {
   overflow: hidden;

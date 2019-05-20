@@ -14,7 +14,7 @@ services:
       - "5000:80"
       - "5001:443"
     volumes:
-      - ${HOME}/.aspnet/https:/https/
+      - $HOME\.aspnet\https:/https/
       
   identity-db:
     image: "mcr.microsoft.com/mssql/server"
@@ -24,6 +24,8 @@ services:
       - identity-service-network
     ports:
       - "1433:1433"
+    volumes:
+      - $HOME\sql-server:/var/opt/mssql
   
   graph-db:
     image: "neo4j"
@@ -34,6 +36,8 @@ services:
     ports:
       - "7474:7474"
       - "7687:7687"
+    volumes:
+      - $HOME\neo4j:/data
 
 
 networks:

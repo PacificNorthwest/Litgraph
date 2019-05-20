@@ -3,6 +3,7 @@ import Router from "vue-router"
 import Vuetify from "vuetify"
 import VueApollo from "vue-apollo"
 import "vuetify/dist/vuetify.min.css"
+import "./styles/fonts.scss"
 
 import { vuexOidcCreateRouterMiddleware } from "vuex-oidc"
 
