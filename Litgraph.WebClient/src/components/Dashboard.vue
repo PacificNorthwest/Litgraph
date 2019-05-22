@@ -176,6 +176,9 @@ export default class DashboardComponent extends Vue {
 
 .dashboard-content {
   display: flex;
+  overflow: auto;
+  max-height: 100vh;
+  height: 100%;
 }
 </style>
 

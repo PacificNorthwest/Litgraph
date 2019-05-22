@@ -1,5 +1,5 @@
 <template>
-  <div class="pa-3" style="width: 100%">
+  <div class="pa-3 xs12">
     <div v-if="$apollo.queries.materials.loading" class="container-outer">
       <div class="container-middle">
         <div class="container-inner">
