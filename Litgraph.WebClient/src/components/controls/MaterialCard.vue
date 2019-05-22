@@ -28,6 +28,7 @@ export default Vue.extend({
 <style lang="scss" scoped>
 .material-card {
     height: 250px;
+    flex-basis: 100%
 }
 </style>
 

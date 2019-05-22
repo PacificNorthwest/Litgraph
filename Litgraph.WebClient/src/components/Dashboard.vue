@@ -2,7 +2,7 @@
   <div class="dashboard-container">
     <v-toolbar class="dashboard-header">
       <v-toolbar-title class="styled-title dashboard-title">Litgraph</v-toolbar-title>
-      <v-breadcrumbs :items="breadcrumbItems" class="ml-5">
+      <v-breadcrumbs :items="breadcrumbItems" v-show="$vuetify.breakpoint.mdAndUp" class="ml-5">
         <v-icon color="white" slot="divider">arrow_forward_ios</v-icon>
         <template slot="item" slot-scope="props">
           <a href class="depth-navigation-item subheading">{{ props.item }}</a>
@@ -37,7 +37,7 @@
       </v-toolbar-items>
     </v-toolbar>
 
-    <v-navigation-drawer class="sidebar" :mini-variant="!isSideMenuExpanded" app permanent clipped>
+    <v-navigation-drawer class="sidebar" :mini-variant="!isSideMenuExpanded" mini-variant-width="65px" app permanent clipped>
       <button
         class="hamburger hamburger-button hamburger--collapse"
         :class="{ 'is-active': isSideMenuExpanded }"
@@ -90,6 +90,7 @@ export default class DashboardComponent extends Vue {
 
 <style lang="scss" scoped>
 @import "./../styles/hamburger.scss";
+@import "./../styles/common.scss";
 
 .dashboard-container {
   overflow: hidden;
@@ -152,9 +153,6 @@ export default class DashboardComponent extends Vue {
   background-color: $secondary-dark-color;
   position: relative;
   float: left;
-}
-.sidebar.v-navigation-drawer--mini-variant {
-  width: 65px !important
 }
 
 .hamburger-button {

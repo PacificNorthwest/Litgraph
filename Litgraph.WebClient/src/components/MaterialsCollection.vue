@@ -8,17 +8,16 @@
       </div>
     </div>
     <div v-else>
-      <v-layout row wrap>
-        <button class="new-material-item-button">
-          <v-icon size="50">add</v-icon>
-          <div>Add material</div>
-        </button>
-        <material-card
-          class="material-card d-inline-block ma-2"
-          v-for="material in materials"
-          :key="material.id"
-          :material="material"
-        ></material-card>
+      <v-layout row wrap fluid>
+        <v-flex pa-2 xs12 sm6 md3>
+          <button class="new-material-item-button">
+            <v-icon size="50">add</v-icon>
+            <div>Add material</div>
+          </button>
+        </v-flex>
+        <v-flex v-for="material in materials" :key="material.id" xs12 sm6 md4 grow="1" style="max-width: 100%">
+          <material-card class="material-card ma-2" :material="material"></material-card>
+        </v-flex>
       </v-layout>
     </div>
   </div>
@@ -72,10 +71,9 @@ export default class MaterialsCollectionComponent extends Vue {
 @import "./../styles/centered-container.scss";
 
 .new-material-item-button {
-  width: 20%;
-  height: 250px;
-  display: inline-block;
-  margin: 10px;
+  width: 100%;
+  height: 100%;
+  min-height: 250px;
   border-radius: 10px;
   border: dashed 4px darkgray;
   background: transparent;
@@ -87,15 +85,9 @@ export default class MaterialsCollectionComponent extends Vue {
       border-color: gray;
   }
 
-  &.focus {
+  &:focus {
       outline: none
   }
-}
-
-.material-card {
-  max-width: 30%;
-  min-width: 20%;
-  width: auto;
 }
 </style>
 
