@@ -10,7 +10,7 @@
     <div v-else>
       <v-layout row wrap fluid>
         <v-flex pa-2 xs12 sm6 md4>
-          <v-dialog v-model="dialog" max-width="800px">
+          <v-dialog v-model="dialog" max-width="800px" @input="v => v || newMaterial.clear()">
             <template v-slot:activator="{ on }">
               <button class="new-material-item-button" v-on="on">
                 <v-icon size="50">add</v-icon>
@@ -30,7 +30,7 @@
                   </v-layout>
                 </v-container>
               </v-card-text>
-              <div class="create-material-busy-indicator" v-show="newMaterialPendingState">
+              <div class="create-material-busy-indicator" v-show="newMaterial.pendingState">
                 <loading-spinner class="centered"></loading-spinner>
               </div>
             </v-card>
@@ -81,7 +81,6 @@ import spinner from "./controls/LoadingSpinner.vue";
 export default class MaterialsCollectionComponent extends Vue {
   materials: Material[] = [];
   dialog: boolean = false;
-  newMaterialPendingState: boolean = false;
 
   user: any;
 
@@ -91,6 +90,7 @@ export default class MaterialsCollectionComponent extends Vue {
       brief: '',
     },
     
+    pendingState: false,
     clear: (): void => {
       this.newMaterial.base.title = '';
       this.newMaterial.base.brief = '';
@@ -98,7 +98,7 @@ export default class MaterialsCollectionComponent extends Vue {
   }
 
   async createMaterial() {
-    this.newMaterialPendingState = true;
+    this.newMaterial.pendingState = true;
     await this.$apollo.mutate({
       mutation: createMaterialQuery,
       variables: {
@@ -113,9 +113,8 @@ export default class MaterialsCollectionComponent extends Vue {
           // cache.materials.unshift(createMaterial.material);
           // store.writeQuery({ query: loadMaterialsQuery, data: cache });
 
-          this.newMaterial.clear();
           this.dialog = false;
-          this.newMaterialPendingState = false;
+          this.newMaterial.pendingState = false;
         }
       }
     })
