@@ -11,6 +11,7 @@
   "author": "Yan Sidorov",
   "license": "ISC",
   "devDependencies": {
+    "@types/graphql": "^14.2.0",
     "@vue/component-compiler-utils": "^2.2.0",
     "css-loader": "^1.0.0",
     "file-loader": "^2.0.0",

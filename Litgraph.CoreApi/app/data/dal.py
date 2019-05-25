@@ -25,7 +25,7 @@ def resolve_materials(context, user_email):
     user = resolve_user(context, user_email)
     return user.materials
 
-def create_material(context, email, title):
+def create_material(context, email, title, brief):
     try:
         user = resolve_user(context, email)
     except UserNotFoundError:
@@ -35,6 +35,7 @@ def create_material(context, email, title):
     material = nodes.Material()
     material.id = str(uuid.uuid4())
     material.title = title
+    material.brief = brief
     user.materials.add(material)
 
     context['Graph'].push(user)

@@ -1,5 +1,5 @@
 <template>
-  <div class="pa-3 xs12">
+  <v-flex pa-3 xs12>
     <div v-if="$apollo.queries.materials.loading" class="container-outer">
       <div class="container-middle">
         <div class="container-inner">
@@ -9,18 +9,39 @@
     </div>
     <div v-else>
       <v-layout row wrap fluid>
-        <v-flex pa-2 xs12 sm6 md3>
-          <button class="new-material-item-button">
-            <v-icon size="50">add</v-icon>
-            <div>Add material</div>
-          </button>
+        <v-flex pa-2 xs12 sm6 md4>
+          <v-dialog v-model="dialog" max-width="800px">
+            <template v-slot:activator="{ on }">
+              <button class="new-material-item-button" v-on="on">
+                <v-icon size="50">add</v-icon>
+                <div>Add material</div>
+              </button>
+            </template>
+            <v-card style="position: relative">
+              <v-card-title class="headline gray primary-colored dark justify-center" primary-title>Create new material</v-card-title>
+              <v-card-text>
+                <v-container>
+                  <v-layout column>
+                    <v-text-field label="Material title" v-model="newMaterial.base.title"></v-text-field>
+                    <v-textarea label="Brief" v-model="newMaterial.base.brief"></v-textarea>
+                    <v-flex text-xs-center mt-5>
+                      <v-btn class="create-material-button" v-on:click="createMaterial" :disabled="newMaterial.base.title.length == 0">Create</v-btn>
+                    </v-flex>
+                  </v-layout>
+                </v-container>
+              </v-card-text>
+              <div class="create-material-busy-indicator" v-show="newMaterialPendingState">
+                <loading-spinner class="centered"></loading-spinner>
+              </div>
+            </v-card>
+          </v-dialog>
         </v-flex>
         <v-flex v-for="material in materials" :key="material.id" xs12 sm6 md4 grow="1" style="max-width: 100%">
           <material-card class="material-card ma-2" :material="material"></material-card>
         </v-flex>
       </v-layout>
     </div>
-  </div>
+  </v-flex>
 </template>
 
 <script lang="ts">
@@ -28,7 +49,10 @@ import Vue from "vue";
 import gql from "graphql-tag";
 import Component from "vue-class-component";
 import { mapGetters, mapActions } from "vuex";
-import { Material } from "./../models/material";
+import { Material, IMaterial } from "./../models/material";
+
+import loadMaterialsQuery from "./../graphql/LoadMaterials.gql"
+import createMaterialQuery from "./../graphql/CreateMaterial.gql"
 
 import materialcard from "./controls/MaterialCard.vue";
 import spinner from "./controls/LoadingSpinner.vue";
@@ -45,24 +69,57 @@ import spinner from "./controls/LoadingSpinner.vue";
   },
   apollo: {
     materials: {
-      query: gql`
-        query LoadMaterials($userEmail: String!) {
-          materials(userEmail: $userEmail) {
-            title
-            brief
-          }
-        }
-      `,
+      query: loadMaterialsQuery,
       variables() {
         return {
           userEmail: this.user.email
-        };
+        }
       }
     }
   }
 })
 export default class MaterialsCollectionComponent extends Vue {
   materials: Material[] = [];
+  dialog: boolean = false;
+  newMaterialPendingState: boolean = false;
+
+  user: any;
+
+  newMaterial = {
+    base: <IMaterial> {
+      title: '',
+      brief: '',
+    },
+    
+    clear: (): void => {
+      this.newMaterial.base.title = '';
+      this.newMaterial.base.brief = '';
+    }
+  }
+
+  async createMaterial() {
+    this.newMaterialPendingState = true;
+    await this.$apollo.mutate({
+      mutation: createMaterialQuery,
+      variables: {
+          email: this.user.email,
+          title: this.newMaterial.base.title,
+          brief: this.newMaterial.base.brief
+      },
+      update: (store, { data: { createMaterial } }) => {
+        if (createMaterial.successful) {
+          this.materials.unshift(createMaterial.material);
+          // const cache = store.readQuery({ query: loadMaterialsQuery, variables: { userEmail: this.user.email } }) as any;
+          // cache.materials.unshift(createMaterial.material);
+          // store.writeQuery({ query: loadMaterialsQuery, data: cache });
+
+          this.newMaterial.clear();
+          this.dialog = false;
+          this.newMaterialPendingState = false;
+        }
+      }
+    })
+  }
 }
 </script>
 
@@ -81,13 +138,34 @@ export default class MaterialsCollectionComponent extends Vue {
   opacity: 0.6;
 
   &:hover {
-      cursor: pointer;
-      border-color: gray;
+    cursor: pointer;
+    border-color: gray;
   }
 
   &:focus {
-      outline: none
+    outline: none;
   }
+}
+
+.create-material-button {
+  color: $main-color;
+  background-color: $primary-dark-color !important;
+}
+
+.centered {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  @include transform(translate3d(-50%, -50%, 0))
+}
+
+.create-material-busy-indicator {
+  background: rgba($color: #000000, $alpha: 0.3);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
 }
 </style>
 

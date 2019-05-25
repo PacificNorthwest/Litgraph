@@ -14,12 +14,13 @@ class UserMutation(BaseMutation):
 class CreateMaterial(graphene.Mutation, UserMutation):
     class Arguments:
         title = graphene.String(required=True)
+        brief = graphene.String(required=False)
     
     material = graphene.Field(lambda: schema.MaterialSchema)
 
-    def mutate(self, info, email, title):
+    def mutate(self, info, email, title, brief):
         try:
-            material = dal.create_material(info.context, email, title)
+            material = dal.create_material(info.context, email, title, brief)
             return CreateMaterial(successful=True, material=material)
         except Exception as e:
             return CreateMaterial(successful=False, errors=[str(e)])

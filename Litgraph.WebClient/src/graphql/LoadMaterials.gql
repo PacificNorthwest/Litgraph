@@ -1,0 +1,6 @@
+query LoadMaterials($userEmail: String!) {
+    materials(userEmail: $userEmail) {
+        title
+        brief
+    }
+}

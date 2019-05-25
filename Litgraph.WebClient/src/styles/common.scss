@@ -7,6 +7,10 @@ $secondary-dark-color: #43516e;
     color: $main-color !important
 }
 
+.primary-colored.dark {
+    color: $primary-dark-color !important
+}
+
 %unselectable {
     -webkit-touch-callout: none;
     -webkit-user-select: none;

@@ -1,0 +1,11 @@
+mutation CreateMaterial($email: String!, $title: String!, $brief: String) {
+  createMaterial(email: $email, title: $title, brief: $brief) {
+    successful
+    errors
+    material {
+      id
+      title
+      brief
+    }
+  }
+}
