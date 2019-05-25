@@ -10,7 +10,7 @@
     <div v-else>
       <v-layout row wrap fluid>
         <v-flex pa-2 xs12 sm6 md4>
-          <v-dialog v-model="dialog" max-width="800px" @input="v => v || newMaterial.clear()">
+          <v-dialog v-model="dialog" max-width="900px" @input="v => v || newMaterial.clear()">
             <template v-slot:activator="{ on }">
               <button class="new-material-item-button" v-on="on">
                 <v-icon size="50">add</v-icon>
@@ -24,6 +24,7 @@
                   <v-layout column>
                     <v-text-field label="Material title" v-model="newMaterial.base.title"></v-text-field>
                     <v-textarea label="Brief" v-model="newMaterial.base.brief"></v-textarea>
+                    <v-dropzone id="images-dropzone" v-bind:options="fileUploadOptions"></v-dropzone>
                     <v-flex text-xs-center mt-5>
                       <v-btn class="create-material-button" v-on:click="createMaterial" :disabled="newMaterial.base.title.length == 0">Create</v-btn>
                     </v-flex>
@@ -56,11 +57,13 @@ import createMaterialQuery from "./../graphql/CreateMaterial.gql"
 
 import materialcard from "./controls/MaterialCard.vue";
 import spinner from "./controls/LoadingSpinner.vue";
+import vueDropzone from "vue2-dropzone"
 
 @Component({
   components: {
     "material-card": materialcard,
-    "loading-spinner": spinner
+    "loading-spinner": spinner,
+    "v-dropzone": vueDropzone
   },
   computed: {
     ...mapGetters({
@@ -83,6 +86,11 @@ export default class MaterialsCollectionComponent extends Vue {
   dialog: boolean = false;
 
   user: any;
+
+  fileUploadOptions: any = {
+    url: 'https://httpbin.org/post',
+    addRemoveLinks: true
+  }
 
   newMaterial = {
     base: <IMaterial> {
